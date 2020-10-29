@@ -12,8 +12,7 @@ CREATE TABLE Clanky(
 	autor INT REFERENCES Users(id),
 	nazev TEXT,
 	obsah TEXT,
-	datum_vydani DATE,
-	hodnoceni INT
+	datum_vydani DATE DEFAULT Now()
 );
 
 CREATE TABLE Clanky_komentar (
@@ -26,6 +25,7 @@ CREATE TABLE Clanky_komentar (
 CREATE TABLE Clanky_hodnoceni (
 	id SERIAL PRIMARY KEY,
 	clanek INT REFERENCES Clanky(id),
+	hodnotitel INT REFERENCES Users(id),
 	aktualnost INT CHECK (aktualnost >= 1 AND aktualnost <= 5),
 	originalita INT CHECK (originalita >= 1 AND originalita <= 5),
 	odbornost INT, CHECK (odbornost >= 1 AND odbornost <= 5),
@@ -34,7 +34,10 @@ CREATE TABLE Clanky_hodnoceni (
 
 CREATE TABLE Helpdesk_vlakno (
 	id SERIAL PRIMARY KEY,
+	predmet TEXT,
 	obsah TEXT,
+	tazatel INT REFERENCES Users(id),
+	datum TIMESTAMP DEFAULT Now();
 	stav BOOLEAN
 );
 
@@ -42,4 +45,11 @@ CREATE TABLE Helpdesk_prispevek (
 	id SERIAL PRIMARY KEY,
 	vlakno INT REFERENCES Helpdesk_vlakno(id),
 	obsah TEXT
+);
+
+CREATE TABLE Historie (
+	id SERIAL PRIMARY KEY,
+	kdo INT REFERENCES Users(id),
+	co TEXT,
+	datum TIMESTAMP DEFAULT Now()
 );
