@@ -1,9 +1,8 @@
 <?php
 
-// trida je nedokoncena, nefunkcni, nektere casti (okomentovane "TO DO") je potreba doplnit
+// trida je nedokoncena, nektere casti (okomentovane "TO DO") je potreba doplnit
 
 class User {
-	// v DB pravdepodobne sloucim polozku 'prijmeni' do 'jmeno', proto zde prijmeni chybi
 	public $id;
 	public $jmeno;
 	public $opravneni;
@@ -98,6 +97,8 @@ class User {
 		//pak přidat někam header('location:odeslano.php');
 	}
 
+	// generovani tokenu,
+	//do budoucna: mozna do argumentu pridat $ucel a presunout sem i hozeni tokenu do databaze
 	private function gen_token() {
     	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
     	$randomString = ''; 
