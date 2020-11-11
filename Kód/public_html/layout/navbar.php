@@ -4,7 +4,7 @@ include_once ROOT . "classes/User.php";
 include_once ROOT . "session.php";
 ?>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
 
             <a class="navbar-brand" href="/">
@@ -22,30 +22,28 @@ include_once ROOT . "session.php";
                     <?php
                     if ($_SESSION['user'] != null) {
                         ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin">Administrace</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/helpdesk">Helpdesk</a>
-                        </li>
+                        <div id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
+                            <?= $_SESSION['user']->getJmeno() ?>
+                        </div>
+                        <div class="dropdown-menu" aria-labelledby="profile">
+                            <h6 class="dropdown-header">Profil</h6>
+                            <a class="dropdown-item" type="button" href="">Příspěvky</a>
+                            <a class="dropdown-item" type="button" href="/edit-profile">Správa účtu</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" type="button" href="/helpdesk">Helpdesk</a>
+                            <a class="dropdown-item" type="button" href="/logout">Odhlásit se</a>
+                        </div>
                         <?php
                     }
+                    else {
                     ?>
-                    <li class="nav-item">
-                        <?php
-                        if ($_SESSION['user'] != null) {
-                            ?>
-                            <span class="nav-link"><a href="/edit-profile"><?= $_SESSION['user']->getJmeno() ?></a> (<a
-                                        href="/logout">Odhlásit se</a>)</span>
-                            <?php
-                        } else {
-                            ?>
+                        <li class="nav-item">
                             <a class="nav-link" href="/login">Přihlášení</a>
-                            <?php
-                        }
-                        ?>
-                    </li>
+                        </li>
+                    <?php
+                    }
+                    ?>
+
                 </ul>
             </div>
         </div>
