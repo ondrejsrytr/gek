@@ -6,8 +6,13 @@ header .dropdown-toggle {
     cursor: pointer;
 }
 
-.container .container-wide {
-    max-width: 1280px!important;;
+@media (min-width: 1200px) {
+    .container, .container-sm, .container-md, .container-lg, .container-xl {
+        max-width: 1140px;
+    }
+    .container .container-wide {
+        max-width: 1280px!important;
+    }
 }
 
 #main_table_wrapper {
