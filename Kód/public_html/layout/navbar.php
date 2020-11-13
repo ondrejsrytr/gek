@@ -5,7 +5,7 @@ include_once ROOT . "session.php";
 ?>
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
+        <div class="container container-wide">
 
             <a class="navbar-brand" href="/">
                 <img src="/gek.png" width="30" height="30" alt="">
