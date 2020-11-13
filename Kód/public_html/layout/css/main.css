@@ -9,3 +9,13 @@ header .dropdown-toggle {
 .container .container-wide {
     max-width: 1280px!important;;
 }
+
+#main_table_wrapper {
+    margin-top: 26px;
+}
+
+#article_filter {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
