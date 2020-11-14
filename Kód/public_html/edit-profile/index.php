@@ -17,6 +17,12 @@ if(!isset($_SESSION['user'])) {
     <?php
     include ROOT . "layout/head.php";
     ?>
+    <?php
+        //pokud se vrátíme ze scriptu deleteaccount.php, tak znovu vyvoláme dialog a oznámíme uživateli nějakou nesrovnalost
+        if(isset($_SESSION['delete_account_feedback'])) {
+            echo '<script>$( document ).ready(function() { $("#deleteaccount").modal() });</script>';
+        }
+    ?>
 </head>
 
 <body>
@@ -129,7 +135,7 @@ if(!isset($_SESSION['user'])) {
         </div>
     </main>
     <div class="modal" id="deleteaccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-dialog modal-dialog-centered" method="post" action="deleteaccount.php">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Vyžadováno ověření</h5>
@@ -138,21 +144,29 @@ if(!isset($_SESSION['user'])) {
                     </button>
                 </div>
                 <div class="modal-body">
+                    <?php
+                        if(isset($_SESSION['delete_account_feedback'])) {
+                            foreach ($_SESSION['delete_account_feedback'] as $zprava) {
+                                echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">'.$zprava.'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+                            }
+                            unset($_SESSION['delete_account_feedback']);
+                        }
+                    ?>
                     <div class="form-group">
                         <p>Pro tuto akci je nutné zadat vaše heslo:</p>
                         <input id="current_password" name="current_password" class="form-control" type="password" required>
                     </div>
                     <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="delete_accept">
+                        <input value="true" name="delete_accept" type="checkbox" class="form-check-input" id="delete_accept">
                         <label class="form-check-label" for="delete_accept">Jsem si vědom/á toho, že tato akce je nevratná a veškeré mé aktivity budou smazány</label>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-dismiss="modal">Zpět</button>
-                    <button type="button" class="btn btn-danger">Smazat účet</button>
+                    <button type="submit" class="btn btn-danger">Smazat účet</button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <?php

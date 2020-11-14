@@ -20,7 +20,7 @@
         if(!password_verify($currentpassword, $_SESSION['user']->getPasswordHash())) {
             //nesouhlasí současné heslo
             array_push($_SESSION['edit_profile_feedback2'], array(
-                "message" => "Vámi zadané současné heslo je nesprávné (".$_SESSION['user']->getPasswordHash(),
+                "message" => "Vámi zadané současné heslo je nesprávné",
                 "alert_class" => "alert-danger"
             ));
         }

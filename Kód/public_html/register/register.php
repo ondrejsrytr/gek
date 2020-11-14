@@ -51,19 +51,23 @@ include ROOT."session.php";
     ?>
 </header>
 
-<main class="container">
+<main class="container d-flex h-100 flex-column pt-5">
     <?php
         if($register_ok) {
     ?>
-    <div class="container alert alert-success" role="alert">
-        Registrace proběhla úspěšně. Nyní je potřeba ověřit váš email, proto zkontrolujte vaší emailovou schánku, kam jsme vám zaslali další instrukce.
-    </div>
+            <div class="container-fluid d-flex h-100 flex-column pt-5">
+                <div class="container alert alert-success" role="alert">
+                    Registrace proběhla úspěšně. Nyní je potřeba ověřit váš email, proto zkontrolujte vaší emailovou schánku, kam jsme vám zaslali další instrukce.
+                </div>
+            </div>
     <?php
         }
         else {
     ?>
-            <div class="alert alert-danger" role="alert">
-                Při registraci vašeho účtu nastala neznámá chybu. Zkuste to, prosím, později a pokud problém setrvá, kontaktujte správce webu.
+            <div class="container-fluid d-flex h-100 flex-column pt-5">
+                <div class="alert alert-danger" role="alert">
+                    Při registraci vašeho účtu nastala neznámá chybu. Zkuste to, prosím, později a pokud problém setrvá, kontaktujte správce webu.
+                </div>
             </div>
     <?php
         }
