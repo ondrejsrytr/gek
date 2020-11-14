@@ -24,7 +24,7 @@
         $userid = $row["id"];
 
         $stmt->close();
-        $stmt = $conn->prepare("UPDATE Users SET opravneni=1 WHERE id = ?");
+        $stmt = $conn->prepare("UPDATE Users SET email_verify=1 WHERE id = ?");
         $stmt->bind_param("i", $userid);
         $stmt->execute();
         $stmt->close();

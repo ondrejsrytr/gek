@@ -8,13 +8,40 @@ class User
     public $jmeno;
     public $opravneni;
     public $email;
+    public $emailverify;
 
-    public function __construct($id, $jmeno, $opravneni, $email)
+    public function __construct($id, $jmeno, $opravneni, $email, $emailverify)
     {
         $this->id = $id;
         $this->jmeno = $jmeno;
         $this->opravneni = $opravneni;
         $this->email = $email;
+        $this->emailverify = $emailverify;
+    }
+
+    public static function getPoleOpravneni() {
+        return array(
+            0 => [
+                "name" => "Uživatel",
+                "badge_class" => "badge-secondary"
+            ],
+            1 => [
+                "name" => "Recenzent",
+                "badge_class" => "badge-info"
+            ],
+            2 => [
+                "name" => "Redaktor",
+                "badge_class" => "badge-warning"
+            ],
+            3 => [
+                "name" => "Šéfredaktor",
+                "badge_class" => "badge-danger"
+            ],
+            4 => [
+                "name" => "Administrátor",
+                "badge_class" => "badge-dark"
+            ]
+        );
     }
 
     public function getId()
@@ -35,6 +62,10 @@ class User
     public function getEmail()
     {
         return $this->email;
+    }
+
+    public function getEmailVerify() {
+        return $this->emailverify;
     }
 
     //vsechny settery vraci true nebo false, jestli byla provedena zmena
@@ -95,7 +126,7 @@ class User
             }
 
             $stmt->close();
-            $stmt = $conn->prepare("UPDATE Users SET email = ?, opravneni = 0 WHERE id = ?");
+            $stmt = $conn->prepare("UPDATE Users SET email = ?, email_verify = 0 WHERE id = ?");
             $stmt->bind_param("si", $nEmail, $this->id);
             if ($stmt === false) {
                 throw new Exception("Nemůžeme zpracovat vložená data");
@@ -245,7 +276,7 @@ class User
     public static function login($email, $heslo)
     {
         $conn = new mysqli('sql4.webzdarma.cz', 'gekwzcz3751', '&976l3lW9b^12.8J)ykv', 'gekwzcz3751');
-        $stmt = $conn->prepare("SELECT id, jmeno, opravneni, email, heslo FROM Users WHERE email = ?");
+        $stmt = $conn->prepare("SELECT id, jmeno, opravneni, email, heslo, email_verify FROM Users WHERE email = ?");
 
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -260,7 +291,7 @@ class User
         $stmt->close();
         $conn->close();
         if(!password_verify($heslo, $row["heslo"])) return false; //Ověření hesla
-        return new User($row["id"], $row["jmeno"], $row["opravneni"], $row["email"]);
+        return new User($row["id"], $row["jmeno"], $row["opravneni"], $row["email"], $row['email_verify']);
 
     }
 

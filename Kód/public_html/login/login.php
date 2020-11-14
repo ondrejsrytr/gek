@@ -19,7 +19,7 @@
         $tmp_usr = User::login($email, $password);
 
         if($tmp_usr != false || $tmp_usr != NULL) {
-            if($tmp_usr->getOpravneni() == 0) {
+            if($tmp_usr->getEmailVerify() === 0) {
                 header("Location: /login?&error=1"); //lenoch si ještě neotevřel email a nerozklikl odkaz v něm
             }
             else {
