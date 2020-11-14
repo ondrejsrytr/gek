@@ -14,7 +14,9 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <script>
     $(document).ready(function () {
-        $('#main_table').DataTable();
+        $('#main_table').DataTable( {
+            "order": [[ 2, "desc" ]]
+        });
     });
 </script>
 <link rel="stylesheet" href="/layout/css/main.css">

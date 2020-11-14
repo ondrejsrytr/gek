@@ -1,5 +1,6 @@
 body {
     padding-top: 60px;
+    background-color: #eee;
 }
 
 header .dropdown-toggle {
@@ -15,9 +16,16 @@ header .dropdown-toggle {
 #main_table_wrapper {
     margin-top: 26px;
 }
+#main_table_wrapper #main_table {
+    background-color: #fff;
+}
 
 #article_filter {
     max-width: 400px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px;
 }
