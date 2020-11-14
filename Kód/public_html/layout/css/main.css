@@ -3,8 +3,11 @@ body {
     background-color: #eee;
 }
 
-header .dropdown-toggle {
+header .dropdown-toggle, .nav-link {
     cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 @media (min-width: 1200px) {

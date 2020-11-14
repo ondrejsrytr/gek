@@ -22,16 +22,21 @@ include_once ROOT . "session.php";
                     <?php
                     if ($_SESSION['user'] != null) {
                         ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin">Administrace</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <div class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <?= $_SESSION['user']->getJmeno() ?> <span class="badge <?= $_SESSION['user']::getPoleOpravneni()[$_SESSION['user']->getOpravneni()]["badge_class"] ?>"><?= $_SESSION['user']->getPoleOpravneni()[$_SESSION['user']->getOpravneni()]["name"] ?></span>
+                                <?= $_SESSION['user']->getJmeno() ?> <span class="badge badge-pill <?= $_SESSION['user']::getPoleOpravneni()[$_SESSION['user']->getOpravneni()]["badge_class"] ?>"><?= $_SESSION['user']->getPoleOpravneni()[$_SESSION['user']->getOpravneni()]["name"] ?></span>
                             </div>
                             <div class="dropdown-menu" aria-labelledby="profile">
                                 <h6 class="dropdown-header">Profil</h6>
                                 <a class="dropdown-item" type="button" href="">Příspěvky</a>
-                                <a class="dropdown-item" type="button" href="/edit-profile">Správa účtu</a>
+                                <a class="dropdown-item" type="button" href="/edit-profile">Nastavení účtu</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" type="button" href="/helpdesk">Helpdesk</a>
+                                <a class="dropdown-item" type="button" href="/support">Podpora</a>
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" type="button" href="/logout">Odhlásit se</a>
                             </div>
                         </li>

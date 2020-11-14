@@ -9,14 +9,16 @@ class User
     public $opravneni;
     public $email;
     public $emailverify;
+    public $passwordhash;
 
-    public function __construct($id, $jmeno, $opravneni, $email, $emailverify)
+    public function __construct($id, $jmeno, $opravneni, $email, $emailverify, $passwordhash)
     {
         $this->id = $id;
         $this->jmeno = $jmeno;
         $this->opravneni = $opravneni;
         $this->email = $email;
         $this->emailverify = $emailverify;
+        $this->passwordhash = $passwordhash;
     }
 
     public static function getPoleOpravneni() {
@@ -39,7 +41,7 @@ class User
             ],
             4 => [
                 "name" => "Administrátor",
-                "badge_class" => "badge-dark"
+                "badge_class" => "badge-light"
             ]
         );
     }
@@ -62,6 +64,10 @@ class User
     public function getEmail()
     {
         return $this->email;
+    }
+
+    public function getPasswordHash() {
+        return $this->passwordhash;
     }
 
     public function getEmailVerify() {
@@ -291,7 +297,7 @@ class User
         $stmt->close();
         $conn->close();
         if(!password_verify($heslo, $row["heslo"])) return false; //Ověření hesla
-        return new User($row["id"], $row["jmeno"], $row["opravneni"], $row["email"], $row['email_verify']);
+        return new User($row["id"], $row["jmeno"], $row["opravneni"], $row["email"], $row['email_verify'], $row["heslo"]);
 
     }
 

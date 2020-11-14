@@ -14,33 +14,57 @@
         $email = test_input($_POST['email']);
         $username = test_input($_POST['username']);
 
+        $_SESSION['edit_profile_feedback'] = array(); //zde bude pole zpráv, které se předají do frontendu
+
         //zkontrolovat, zda něco změnil
         if($_SESSION['user']->getEmail() != $email || $_SESSION['user']->getJmeno() != $username) {
-            $chyba = 0;
+            if($_SESSION['user']->getJmeno() != $username) {
+                if(!empty($username)) {
+                    if($_SESSION['user']->setJmeno($username)) {
+                        array_push($_SESSION['edit_profile_feedback'], array(
+                            "message" => "Uživatelské jméno bylo úspěšně změneno",
+                            "alert_class" => "alert-success"
+                        ));
+                    }
+                    else {
+                        array_push($_SESSION['edit_profile_feedback'], array(
+                            "message" => "Nastala neznámá chyba při změně uživatelského jména. Pokdu bude problém setrvávat, kontaktujte administrátora.",
+                            "alert_class" => "alert-danger"
+                        ));
+                    }
+                }
+                else {
+                    array_push($_SESSION['edit_profile_feedback'], array(
+                        "message" => "Pole pro uživatelské jméno nesmí být prázdné",
+                        "alert_class" => "alert-danger"
+                    ));
+                }
+            }
             if($_SESSION['user']->getEmail() != $email) {
-
+                /*
                 if($_SESSION['user']->setEmail($email)) {
                     $chyba = 0;
                 }
                 else {
                     $chyba = 2;
                 }
+                */
             }
-            if($_SESSION['user']->getJmeno() != $username) {
-                if($_SESSION['user']->setJmeno($username)) {
-                    $chyba = 0;
-                }
-                else {
-                    $chyba = 2;
-                }
-            }
-            header("Location: /edit-profile?&basics=".$chyba);
         }
         else {
-            //uživatel nic nezměnil
-            header("Location: /edit-profile?&basics=1");
+            //uživatel nic nezměnil nebo spíš obešel kontrolu v HTML, "nadějný hacker"
+            array_push($_SESSION['edit_profile_feedback'], array(
+                "message" => "Změny nemohly být uloženy, protože žádné údaje nebyly změněny!",
+                "alert_class" => "alert-warning"
+            ));
         }
 
 
     }
-
+    else {
+        array_push($_SESSION['edit_profile_feedback'], array(
+            "message" => "Neplatná metoda odeslání!",
+            "alert_danger" => "alert-danger"
+        ));
+    }
+    header("Location: /edit-profile");

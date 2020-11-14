@@ -3,43 +3,17 @@ define('ROOT', "/3w/users/g/gek.wz.cz/web/");
 include_once ROOT."classes/User.php";
 include ROOT."session.php";
 
-/*
+
 if(!isset($_SESSION['user'])) {
     $_SESSION['referer'] = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     header("Location: /login");
 }
-
-$chyba = 0;
-
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-    function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-
-    $username = test_input($_POST['username']);
-    $password = test_input($_POST['password']);
-    $password2 = test_input($_POST['password2']);
-    $email = test_input($_POST['email']);
-
-    
-
-    //settery overuji, jestli se data neshoduji s aktualnim stavem
-    $_SESSION['user']->setJmeno($username);
-    if($_SESSION['user']->setHeslo($password, $password2) == false)
-        $chyba = 1;
-    $_SESSION['user']->setEmail($email);
-}
-*/
 ?>
 <!doctype html>
 <html lang="cs">
 
 <head>
-    <title>Upravit profil</title>
+    <title>Nastavení účtu</title>
     <?php
     include ROOT . "layout/head.php";
     ?>
@@ -49,97 +23,137 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php
     include ROOT . "layout/navbar.php";
     ?>
-
-<main class="container d-flex h-100 flex-column pt-5">
-        <h4 class="card-title text-center mb-4 mt-1">Správa účtu</h4>
-        <div class="container-fluid col-lg-8 pb-5">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="card margin-bottom-20">
-                        <div class="card-header">
-                            Základní údaje
-                        </div>
-                        <div class="card-body" method="post">
-                            <?php
-                                if(isset($_GET['basics'])) {
-                                    switch($_GET['basics']) {
-                                        case 1:
-                                            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">Změny nemohly být uloženy, protože údaje zůstaly nepozměněné<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
-                                            break;
-                                        case 0:
-                                            echo '<div class="alert alert-success alert-dismissible fade show" role="alert">Změny byly úspěšně uloženy<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
-                                            break;
-                                        case 2:
-                                            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">Nastala chyba při ukládání změn<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
-                                            break;
-                                    }
-                                }
-                            ?>
-                            <form action="change_basics.php" method="post">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="username">Vaše jméno</label>
-                                            <input id="username" name="username" value="<?=$_SESSION['user']->getJmeno()?>" class="form-control" type="text" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="email">Emailová adresa</label>
-                                            <input id="email" name="email" value="<?=$_SESSION['user']->getEmail()?>" class="form-control" placeholder="Email" type="email" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <button class="btn btn-primary" type="submit">Uložit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+    <div class="jumbotron jumbotron-fluid" style="margin-bottom: 0px;">
+        <div class="container">
+            <h1 class="display-4">Nastavení účtu</h1>
+            <!--<p class="lead" style="/*! displaY: none; */">Tato stránka vám umožní nastavit váš účet podle vašich představ</p>-->
+        </div>
+    </div>
+    <main class="container d-flex h-100 flex-column pt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card margin-bottom-20">
+                    <div class="card-header">
+                        Základní údaje
                     </div>
-                    <div class="card margin-bottom-20">
-                        <div class="card-header">
-                            Změna hesla
-                        </div>
-                        <div class="card-body" method="post">
-                            <form action="change_password.php" method="post">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="password">Nové heslo</label>
-                                            <input id="password" name="password" class="form-control" type="password" required>
-                                        </div>
-                                    </div>
+                    <div class="card-body">
+                        <?php
+                        if(isset($_SESSION['edit_profile_feedback'])) {
+                            foreach ($_SESSION['edit_profile_feedback'] as $zprava) {
+                                echo '<div class="alert '.$zprava['alert_class'].' alert-dismissible fade show" role="alert">'.$zprava['message'].'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+                            }
+                            unset($_SESSION['edit_profile_feedback']);
+                        }
+                        ?>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="password2">Nové heslo znovu</label>
-                                            <input id="password2" name="password2" class="form-control" type="password" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="current_password">Současné heslo</label>
-                                            <input id="current_password" name="current_password" class="form-control" type="password">
-                                            <small id="emailHelp" class="form-text text-muted">Před změnou hesla je nutné zadat vaše aktuální heslo</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <button class="btn btn-primary" type="submit">Změnit heslo</button>
-                                        </div>
+                        <form action="change_basics.php" method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="username">Vaše jméno</label>
+                                        <input id="username" name="username" value="<?=$_SESSION['user']->getJmeno()?>" class="form-control" type="text" required>
                                     </div>
                                 </div>
-                            </form>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="email">Emailová adresa</label>
+                                        <input id="email" name="email" value="<?=$_SESSION['user']->getEmail()?>" class="form-control" placeholder="Email" type="email" required>
+                                        <small class="form-text text-muted">V případě změny emailové adresy bude nutné opakované ověření</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" type="submit">Uložit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card margin-bottom-20">
+                    <div class="card-header">
+                        Změna hesla
+                    </div>
+                    <div class="card-body">
+                        <?php
+                        if(isset($_SESSION['edit_profile_feedback2'])) {
+                            foreach ($_SESSION['edit_profile_feedback2'] as $zprava) {
+                                echo '<div class="alert '.$zprava['alert_class'].' alert-dismissible fade show" role="alert">'.$zprava['message'].'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+                            }
+                            unset($_SESSION['edit_profile_feedback2']);
+                        }
+                        ?>
+                        <form action="change_password.php" method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="password">Nové heslo</label>
+                                        <input id="password" name="password" class="form-control" type="password" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="password2">Nové heslo znovu</label>
+                                        <input id="password2" name="password2" class="form-control" type="password" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="current_password">Současné heslo</label>
+                                        <input id="current_password" name="current_password" class="form-control" type="password" required>
+                                        <!--<small class="form-text text-muted">Před změnou hesla je nutné zadat vaše aktuální heslo</small>-->
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" type="submit">Změnit heslo</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card margin-bottom-20">
+                    <div class="card-header">
+                        Další akce
+                    </div>
+                    <div class="card-body" method="post">
+                        <div class="form-group">
+                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteaccount">Smazat účet</a><br>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-</main>
+    </main>
+    <div class="modal" id="deleteaccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Vyžadováno ověření</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p>Pro tuto akci je nutné zadat vaše heslo:</p>
+                        <input id="current_password" name="current_password" class="form-control" type="password" required>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="delete_accept">
+                        <label class="form-check-label" for="delete_accept">Jsem si vědom/á toho, že tato akce je nevratná a veškeré mé aktivity budou smazány</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Zpět</button>
+                    <button type="button" class="btn btn-danger">Smazat účet</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <?php
     include ROOT . "layout/footer.php";
