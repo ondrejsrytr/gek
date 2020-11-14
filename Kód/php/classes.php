@@ -50,7 +50,7 @@ class User {
 
 		$stmt->close();
 		$stmt = $conn->prepare("INSERT INTO Users (email, jmeno, heslo) VALUES (?, ?, ?)")
-		$hash = password_hash($heslo, PASSWORD_ARGON2I);
+		$hash = password_hash($heslo, APC_BIN_VERIFY_MD5);
 		//mozna pouzit real_escape_char... nebo to osetrovat pri tahani z DB? pri bind_param prece sql injection nejde... ze? :(
 		$stmt->bind_param("sss", $email, $jmeno, $hash);
 		$stmt->execute();
