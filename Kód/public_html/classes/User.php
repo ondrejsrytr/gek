@@ -152,7 +152,7 @@ class User
             $conn->close();
 
             self::send_verify($nEmail, $token);
-            session_destroy();
+            //session_destroy(); //udělá se přesměrování na stránku, která oznámí, aby uživatel znovu ověřil email
             return true;
         } catch (Exception $e) {
             if ($stmt) {
