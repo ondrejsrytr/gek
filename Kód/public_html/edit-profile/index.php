@@ -23,6 +23,36 @@ if(!isset($_SESSION['user'])) {
             echo '<script>$( document ).ready(function() { $("#deleteaccount").modal() });</script>';
         }
     ?>
+    <script>
+        $( document ).ready(function() {
+            document.getElementById("changeemail_btn").addEventListener("click", function () {
+                document.getElementById("email_verify2").style.display = "none";
+                document.getElementById("email_verify1").style.display = "block";
+                $("#changeemail").modal();
+                document.getElementById("new_email_address").value = "";
+                document.getElementById("check_code").value = "";
+                document.getElementById("verify_email").disabled = false;
+            });
+            document.getElementById("email_step2").addEventListener("click", function () {
+                //jsem lenoch, tak využiju validation api z prohlížeče
+                if(document.getElementById("new_email_address").value != "" && !document.getElementById("new_email_address").validity.typeMismatch) {
+                    document.getElementById("new_email_address_err").style.display = "none";
+                    document.getElementById("email_verify2").style.display = "block";
+                    document.getElementById("email_verify1").style.display = "none";
+                    document.querySelectorAll("*[data-auto-fill]").forEach(function(el) {
+                        el.innerText = document.getElementById(el.getAttribute("data-auto-fill")).value;
+                    });
+                    sendMailVerificationRequest(document.getElementById("new_email_address").value);
+                }
+                else {
+                    document.getElementById("new_email_address_err").style.display = "block";
+                }
+            });
+            document.getElementById("verify_email").addEventListener("click", function () {
+                checkForEmailVerification(document.getElementById("check_code").value);
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -51,30 +81,30 @@ if(!isset($_SESSION['user'])) {
                             unset($_SESSION['edit_profile_feedback']);
                         }
                         ?>
-
-                        <form action="change_basics.php" method="post">
-                            <div class="row">
-                                <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form action="change_basics.php" method="post">
                                     <div class="form-group">
                                         <label for="username">Vaše jméno</label>
                                         <input id="username" name="username" value="<?=$_SESSION['user']->getJmeno()?>" class="form-control" type="text" required>
                                     </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="email">Emailová adresa</label>
-                                        <input id="email" name="email" value="<?=$_SESSION['user']->getEmail()?>" class="form-control" placeholder="Email" type="email" required>
-                                        <small class="form-text text-muted">V případě změny emailové adresy bude nutné opakované ověření</small>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
                                     <div class="form-group">
                                         <button class="btn btn-primary" type="submit">Uložit</button>
                                     </div>
+                                </form>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Emailová adresa</label>
+                                    <input id="email" value="<?=$_SESSION['user']->getEmail()?>" class="form-control" placeholder="Email" type="email" disabled>
+                                    <!--<small class="form-text text-muted">V případě změny emailové adresy bude nutné opakované ověření</small>-->
+                                </div>
+                                <div class="form-group">
+                                    <button id="changeemail_btn" class="btn btn-primary" type="submit">Změnit email</button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
                 <div class="card margin-bottom-20">
@@ -167,6 +197,55 @@ if(!isset($_SESSION['user'])) {
                 </div>
             </div>
         </form>
+    </div>
+    <div class="modal" id="changeemail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div id="email_verify1" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Změna emailové adresy</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="new_email_address_err" style="display: none" class="alert alert-danger" role="alert">
+                        Emailová adresa není platná!
+                    </div>
+                    <div class="form-group">
+                        <p>Nová emailová adresa</p>
+                        <input id="new_email_address" name="new_email_address" class="form-control" type="email">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Zpět</button>
+                    <button id="email_step2" type="button" class="btn btn-primary">Pokračovat</button>
+                </div>
+            </div>
+            <div id="email_verify2" class="modal-content" style="display: none">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Změna emailové adresy</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="verify_err" style="display: none" class="alert alert-danger" role="alert">
+                        Chyba ověření, pravděpodobně špatně opsaný kód.
+                    </div>
+                    <div class="form-group">
+                        <p>Zadejte kód pro ověření. Najdete ho v emailu, který jsme vám právě zaslali na <span class="text-info" data-auto-fill="new_email_address"></span></p>
+                        <input id="check_code" maxlength="6" name="check_code" class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <a href="#">Odeslat znovu</a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Zpět</button>
+                    <button type="button" id="verify_email" class="btn btn-primary">Ověřit a uložit</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <?php

@@ -11,3 +11,42 @@ window.addEventListener("load", function() {
         el.remove();
     });
 });
+
+function sendMailVerificationRequest(email) {
+    if (window.XMLHttpRequest) {
+        xhttp = new XMLHttpRequest();
+    } else {
+        xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xhttp.open("POST", "//gek.wz.cz/edit-profile/sendverify.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("email=" + email);
+}
+
+function checkForEmailVerification(code) {
+    document.getElementById("verify_email").disabled = true;
+    if (window.XMLHttpRequest) {
+        xhttp = new XMLHttpRequest();
+    } else {
+        xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var resp = this.responseText;
+            //protože na tom úžasným hostingu je reklama, musí se na to takhle
+            if(resp.indexOf("{\"response\":\"ok\"}")) {
+                document.getElementById("verify_err").style.display = "none";
+                $('#changeemail').modal('toggle');
+                location.reload();
+            }
+            else {
+                document.getElementById("verify_err").style.display = "block";
+                document.getElementById("verify_email").disabled = false;
+            }
+        }
+    };
+    xhttp.open("POST", "//gek.wz.cz/edit-profile/checkverify.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("code=" + code);
+}
