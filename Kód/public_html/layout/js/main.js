@@ -35,7 +35,7 @@ function checkForEmailVerification(code) {
         if (this.readyState == 4 && this.status == 200) {
             var resp = this.responseText;
             //protože na tom úžasným hostingu je reklama, musí se na to takhle
-            if(resp.indexOf("{\"response\":\"ok\"}")) {
+            if(resp.indexOf("{\"response\":\"ok\"}") >= 0) {
                 document.getElementById("verify_err").style.display = "none";
                 $('#changeemail').modal('toggle');
                 location.reload();
