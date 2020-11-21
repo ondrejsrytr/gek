@@ -49,3 +49,10 @@ SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani
 FROM Clanky INNER 
 JOIN Users 
 on Clanky.autor = Users.id;
+
+-- Vypsat hodnocení článků od daného uživatele
+SELECT Clanky.nazev, B.jmeno as hodnotitel, datum_ohodnoceni, aktualnost, originalita, odbornost, format
+FROM Clanky_hodnoceni
+JOIN Clanky ON Clanky_hodnoceni.clanek = Clanky.id
+JOIN Users B ON Clanky_hodnoceni.hodnotitel = B.id
+WHERE Clanky.autor = ?;
