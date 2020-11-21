@@ -43,3 +43,9 @@ FROM Historie
 JOIN Users ON kdo = Users.id
 WHERE Users.id = ?
 AND datum LIKE ?;
+
+--Vypsat všechny články a jejich autory jako jméno
+SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani 
+FROM Clanky INNER 
+JOIN Users 
+on Clanky.autor = Users.id;
