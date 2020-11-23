@@ -48,7 +48,7 @@
                         <tbody>
                         <?php
                         //SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id
-                        $dotaz = "SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id";
+                        $dotaz = "SELECT Users.jmeno, Clanky.id, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id";
                         $vysledek = $pdo->prepare($dotaz);
                         $vysledek->execute();
                         $result = $vysledek->fetchAll(\PDO::FETCH_ASSOC);
@@ -65,7 +65,7 @@
                             print $result[$i]["datum_vydani"];
                             echo '</td>';
                             echo '<td>';
-                            echo "Odkaz zde"; //TODO
+                            echo '<a href="/upload/'.$result[$i]["id"].'.pdf" download="Clanek.pdf">Stáhnout</a>';
                             echo '</td>';
                             echo '</tr>';
                         }
@@ -77,7 +77,7 @@
                      aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <form action="" method="post">
+                            <form action="upload.php" method="post" enctype="multipart/form-data">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Nový příspěvek</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -87,12 +87,12 @@
                                 <div class="modal-body">
                                         <div class="form-group">
                                             <label for="articleName">Název příspěvku</label>
-                                            <input type="text" class="form-control" id="articleName">
+                                            <input type="text" class="form-control" name="articleName">
                                         </div>
                                         <div class="form-group">
                                             <label for="articleFile">Článek ve formátu PDF nebo DOC(X)</label>
                                             <br />
-                                            <input type="file" class="" id="articleFile">
+                                            <input type="file" class="" name="articleFile">
                                         </div>
                                         <div class="form-group">
                                             <label for="articleName">Tématické číslo časopisu</label>

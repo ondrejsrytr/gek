@@ -77,7 +77,7 @@ include ROOT . "session.php";
                 print $result[$i]["datum_vydani"];
                 echo '</td>';
                 echo '<td>';
-                echo "Odkaz zde"; //TODO
+                echo '<a href="/upload/'.$result[$i]["id"].'.pdf" download="Clanek.pdf">Stáhnout</a>';
                 echo '</td>';
                 echo '</tr>';
             }
