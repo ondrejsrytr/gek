@@ -13,7 +13,8 @@
 
     foreach ($menu as $polozka) {
 
-        if($_SERVER['REQUEST_URI'] == $polozka['url']."/") {
+        //if($_SERVER['REQUEST_URI'] == $polozka['url']."/") {
+        if(strpos($_SERVER['REQUEST_URI'],$polozka['url']) !== false) {
             echo '<li class="nav-item"><a class="nav-link active" href="'.$polozka['url'].'">'.$polozka['nazev'].'</a></li>';
         }
         else {

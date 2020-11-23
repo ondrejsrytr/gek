@@ -17,26 +17,18 @@ if(!isset($_SESSION['user'])) {
     include ROOT . "layout/head.php";
     ?>
     <style>
-        main {
-            padding-top: 60px;
-            background-color: #e4e8f0;
-            height: 80vh;
+        .admin .row .col-lg-3, .admin .row .col-lg-9 {
+            margin-top: 30px;
         }
-
-        div.container-fluid div {
-            padding: 20px;
+        .admin .col-content {
             background-color: white;
+            height: 100%;
+            padding: 30px;
         }
-
-        @media (max-width: 600px) {
-
-            div.container-fluid {
-                flex-direction: column !important;
-            }
-
-            ul.nav {
-                flex-direction: row !important;
-            }
+        .admin .col-menu {
+            padding: 10px;
+            background-color: white;
+            height: 100%;
         }
     </style>
 </head>
