@@ -7,6 +7,21 @@ if(!isset($_SESSION['user'])) {
     $_SESSION['referer'] = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     header("Location: /login");
 }
+
+///POLOŽKY V MENU A OPRÁVNĚNÍ
+$_SERVER['menu'] = [
+    [
+        "nazev" => "Příspěvky",
+        "url" => "/admin/articles",
+        "opravneni" => array(2,3,4)
+    ],
+    [
+        "nazev" => "Uživatelé",
+        "url" => "/admin/users",
+        "opravneni" => array(4)
+    ]
+];
+
 ?>
 <!doctype html>
 <html lang="cs">

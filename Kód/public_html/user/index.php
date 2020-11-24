@@ -67,10 +67,10 @@
             <?php
                 if($nalezenuser) {
             ?>
-            <h2><?= $uzivatel['jmeno'] ?></h2>
+            <h2><?= $uzivatel['jmeno'] ?> <span class="badge badge-pill <?= $_SESSION['user']::getPoleOpravneni()[$uzivatel['opravneni']]["badge_class"] ?>"><?= $_SESSION['user']->getPoleOpravneni()[$uzivatel['opravneni']]["name"] ?></span></h2>
             <p></p>
             <p>
-                Email: <?= $uzivatel['email'] ?><br>
+                Email: <a href="mailto:<?= $uzivatel['email'] ?>"><?= $uzivatel['email'] ?></a><br>
                 Stav účtu:
                 <?php
                     if($uzivatel['opravneni'] == "-1") {

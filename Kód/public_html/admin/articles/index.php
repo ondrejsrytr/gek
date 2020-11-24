@@ -5,14 +5,11 @@
     <div class="container admin">
         <div class="row row-eq-height">
             <div class="col-lg-3">
-                <div class="col-menu">
-                    <ul class="nav nav-pills flex-column">
-                        <?php include "../menu.php"; ?>
-                    </ul>
-                </div>
+                <?php include "../menu.php"; ?>
             </div>
             <div class="col-lg-9">
                 <div class="col-content">
+                    <!-- OBSAH STRÁNKY -->
                     <div class="d-flex justify-content-between align-items-baseline py-0">
                         <h4 class="my-0">Vaše příspěvky</h4>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#addNewForm">Přidat nový</button>
@@ -48,7 +45,7 @@
                         <tbody>
                         <?php
                         //SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id
-                        $dotaz = "SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id";
+                        $dotaz = "SELECT Users.id, Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id";
                         $vysledek = $pdo->prepare($dotaz);
                         $vysledek->execute();
                         $result = $vysledek->fetchAll(\PDO::FETCH_ASSOC);
@@ -59,7 +56,7 @@
                             print $result[$i]["nazev"];
                             echo '</td>';
                             echo '<td>';
-                            print $result[$i]["jmeno"];
+                            print '<a target="blank" href="/user?&id='.$result[$i]["id"].'">'.$result[$i]["jmeno"].'</a>';
                             echo '</td>';
                             echo '<td>';
                             print $result[$i]["datum_vydani"];
