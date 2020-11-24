@@ -48,7 +48,7 @@
                         <tbody>
                         <?php
                         //SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id
-                        $dotaz = "SELECT Users.jmeno, Clanky.id, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id";
+                        $dotaz = "SELECT Users.id, Users.jmeno, Clanky.id, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id";
                         $vysledek = $pdo->prepare($dotaz);
                         $vysledek->execute();
                         $result = $vysledek->fetchAll(\PDO::FETCH_ASSOC);
@@ -59,7 +59,7 @@
                             print $result[$i]["nazev"];
                             echo '</td>';
                             echo '<td>';
-                            print $result[$i]["jmeno"];
+                            print '<a target="blank" href="/user?&id='.$result[$i]["id"].'">'.$result[$i]["jmeno"].'</a>';
                             echo '</td>';
                             echo '<td>';
                             print $result[$i]["datum_vydani"];
