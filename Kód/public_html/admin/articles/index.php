@@ -5,11 +5,14 @@
     <div class="container admin">
         <div class="row row-eq-height">
             <div class="col-lg-3">
-                <?php include "../menu.php"; ?>
+                <div class="col-menu">
+                    <ul class="nav nav-pills flex-column">
+                        <?php include "../menu.php"; ?>
+                    </ul>
+                </div>
             </div>
             <div class="col-lg-9">
                 <div class="col-content">
-                    <!-- OBSAH STRÁNKY -->
                     <div class="d-flex justify-content-between align-items-baseline py-0">
                         <h4 class="my-0">Vaše příspěvky</h4>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#addNewForm">Přidat nový</button>
@@ -45,7 +48,7 @@
                         <tbody>
                         <?php
                         //SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id
-                        $dotaz = "SELECT Users.id, Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id";
+                        $dotaz = "SELECT Users.jmeno, Clanky.id, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id";
                         $vysledek = $pdo->prepare($dotaz);
                         $vysledek->execute();
                         $result = $vysledek->fetchAll(\PDO::FETCH_ASSOC);
@@ -56,13 +59,13 @@
                             print $result[$i]["nazev"];
                             echo '</td>';
                             echo '<td>';
-                            print '<a target="blank" href="/user?&id='.$result[$i]["id"].'">'.$result[$i]["jmeno"].'</a>';
+                            print $result[$i]["jmeno"];
                             echo '</td>';
                             echo '<td>';
                             print $result[$i]["datum_vydani"];
                             echo '</td>';
                             echo '<td>';
-                            echo "Odkaz zde"; //TODO
+                            echo '<a href="/upload/'.$result[$i]["id"].'.pdf" download="Clanek.pdf">Stáhnout</a>';
                             echo '</td>';
                             echo '</tr>';
                         }
@@ -74,7 +77,7 @@
                      aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <form action="" method="post">
+                            <form action="upload.php" method="post" enctype="multipart/form-data">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Nový příspěvek</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -84,12 +87,12 @@
                                 <div class="modal-body">
                                         <div class="form-group">
                                             <label for="articleName">Název příspěvku</label>
-                                            <input type="text" class="form-control" id="articleName">
+                                            <input type="text" class="form-control" name="articleName">
                                         </div>
                                         <div class="form-group">
                                             <label for="articleFile">Článek ve formátu PDF nebo DOC(X)</label>
                                             <br />
-                                            <input type="file" class="" id="articleFile">
+                                            <input type="file" class="" name="articleFile">
                                         </div>
                                         <div class="form-group">
                                             <label for="articleName">Tématické číslo časopisu</label>
