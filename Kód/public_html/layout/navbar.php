@@ -27,7 +27,7 @@ include_once ROOT . "session.php";
                         </li>
                         <li class="nav-item dropdown">
                             <div class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <?= $_SESSION['user']->getJmeno() ?> <span class="badge badge-pill <?= $_SESSION['user']::getPoleOpravneni()[$_SESSION['user']->getOpravneni()]["badge_class"] ?>"><?= $_SESSION['user']->getPoleOpravneni()[$_SESSION['user']->getOpravneni()]["name"] ?></span>
+                                <?= $_SESSION['user']->getJmeno() ?> <span class="badge badge-pill <?= $_SESSION['user']::getPoleOpravneni()[$_SESSION['user']->getOpravneni()]["badge_class"] ?>"><?= User::getPoleOpravneni()[$_SESSION['user']->getOpravneni()]["name"] ?></span>
                             </div>
                             <div class="dropdown-menu" aria-labelledby="profile">
                                 <h6 class="dropdown-header">Profil</h6>

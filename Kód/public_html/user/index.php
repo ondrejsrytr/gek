@@ -67,7 +67,7 @@
             <?php
                 if($nalezenuser) {
             ?>
-            <h2><?= $uzivatel['jmeno'] ?> <span class="badge badge-pill <?= $_SESSION['user']::getPoleOpravneni()[$uzivatel['opravneni']]["badge_class"] ?>"><?= $_SESSION['user']->getPoleOpravneni()[$uzivatel['opravneni']]["name"] ?></span></h2>
+            <h2><?= $uzivatel['jmeno'] ?> <span class="badge badge-pill <?= User::getPoleOpravneni()[$uzivatel['opravneni']]["badge_class"] ?>"><?= User::getPoleOpravneni()[$uzivatel['opravneni']]["name"] ?></span></h2>
             <p></p>
             <p>
                 Email: <a href="mailto:<?= $uzivatel['email'] ?>"><?= $uzivatel['email'] ?></a><br>
