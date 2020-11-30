@@ -6,6 +6,10 @@
       integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous">
     </script> 
 
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" 
+    integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous">
+    </script>
+
     <script> 
       $(function () {
         $("head").load("../layout/head.html")
@@ -13,6 +17,12 @@
         $("footer").load("../layout/footer.html");
       });
     </script>
+
+<script>
+  $( function() {
+    $(".tooltipp").tooltip();
+  } );
+  </script>
 
     <style>
       main {
@@ -39,7 +49,7 @@
 
       <div class="container">
         <h2 style="font-weight:normal;">Ondřej Šrytr <span class="badge badge-secondary">Administrátor</span></h2>
-        <p>Email: <a href="mailto:ondrejsrytr@onrejsrytr.cz">ondrejsrytr@ondrejsrytr.cz</a></p>
+        <p>Email: <a class="tooltipp" href="mailto:ondrejsrytr@onrejsrytr.cz" title="Toto je tooltip">ondrejsrytr@ondrejsrytr.cz</a></p>
         <p>Stav: OK (email ověřen)</p>
       </div>
     </main>
