@@ -1,6 +1,21 @@
 <?php
 include "../head.php";
 ?>
+    <script>
+        function deleteAccount(event) {
+            event.preventDefault();
+            $('#deleteaccount').modal('show');
+
+            var autofill_elems = document.getElementById("deleteaccount").querySelectorAll("*[data-autofill]");
+            for(var i = 0; i < autofill_elems.length; i++) {
+                autofill_elems[i].innerHTML = event.currentTarget.getAttribute("data-" + autofill_elems[i].getAttribute("data-autofill"));
+            }
+            var autofill_val_elems = document.getElementById("deleteaccount").querySelectorAll("*[data-autofill-value]");
+            for(var i = 0; i < autofill_val_elems.length; i++) {
+                autofill_val_elems[i].value = event.currentTarget.getAttribute("data-" + autofill_val_elems[i].getAttribute("data-autofill-value"));
+            }
+        }
+    </script>
     <div class="container admin">
         <div class="row row-eq-height">
             <div class="col-lg-3">
@@ -44,13 +59,36 @@ include "../head.php";
                             print $result[$i]["email"];
                             echo '</td>';
                             echo '<td>';
-                            if($result[$i]["id"] != $_SESSION['user']->getId()) echo '<div class="dropdown"><button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Akce</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Změnit údaje</a><a class="dropdown-item text-danger" href="#">Smazat</a></div></div>';
+                            //if($result[$i]["id"] != $_SESSION['user']->getId()) echo '<div class="dropdown"><button class="btn btn-link btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Akce</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Změnit údaje</a><a class="dropdown-item text-danger" data-account-id="'.$result[$i]["id"].'" data-account-name="'.$result[$i]["jmeno"].'" onclick="deleteAccount(event)" href="#">Smazat</a></div></div>';
+                            if($result[$i]["id"] != $_SESSION['user']->getId()) echo '<div class="dropdown"><button class="btn btn-link btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Akce</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item text-danger" data-account-id="'.$result[$i]["id"].'" data-account-name="'.$result[$i]["jmeno"].'" onclick="deleteAccount(event)" href="#">Smazat</a></div></div>';
                             echo '</td>';
                             echo '</tr>';
                         }
                         ?>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="deleteaccount" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Smazat účet</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Opravdu chcete smazat účet <span data-autofill="account-name"></span> (ID:<span data-autofill="account-id"></span>)?</p>
+                </div>
+                <div class="modal-footer">
+                    <form action="deleteaccount.php" method="post">
+                        <input name="id" type="hidden" data-autofill-value="account-id">
+                        <button type="submit" class="btn btn-danger">Ano</button>
+                    </form>
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Ne</button>
                 </div>
             </div>
         </div>

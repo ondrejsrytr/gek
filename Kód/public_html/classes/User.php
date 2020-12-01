@@ -28,18 +28,22 @@ class User
                 "badge_class" => "badge-secondary"
             ],
             1 => [
-                "name" => "Recenzent",
+                "name" => "Autor",
                 "badge_class" => "badge-info"
             ],
             2 => [
+                "name" => "Recenzent",
+                "badge_class" => "badge-info"
+            ],
+            3 => [
                 "name" => "Redaktor",
                 "badge_class" => "badge-warning"
             ],
-            3 => [
+            4 => [
                 "name" => "Šéfredaktor",
                 "badge_class" => "badge-danger"
             ],
-            4 => [
+            5 => [
                 "name" => "Administrátor",
                 "badge_class" => "badge-light"
             ]

@@ -60,7 +60,7 @@ include ROOT . "session.php";
             <tbody>
             <?php
             //SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id
-            $dotaz = "SELECT Users.id, Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id";
+            $dotaz = "SELECT Users.id, Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id WHERE Clanky.stav = 1";
             $vysledek = $pdo->prepare($dotaz);
             $vysledek->execute();
             $result = $vysledek->fetchAll(\PDO::FETCH_ASSOC);

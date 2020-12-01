@@ -8,19 +8,38 @@ if(!isset($_SESSION['user'])) {
     header("Location: /login");
 }
 
+
 ///POLOŽKY V MENU A OPRÁVNĚNÍ
+/// nazev: Pod jakým názvem se bude zobrazovat v levém menu
+/// url: adresa, která slouží ke zvýraznění aktuální stránky
+/// opraveni: Která oprávnění budou mít přístup k dané stránce
 $_SERVER['menu'] = [
+    //autor
     [
-        "nazev" => "Příspěvky",
-        "url" => "/admin/articles",
-        "opravneni" => array(2,3,4)
+        "nazev" => "Vaše příspěvky",
+        "url" => "/admin/articles-author",
+        "opravneni" => array(1,5)
     ],
+    //recenzent
+    [
+        "nazev" => "Příspěvky k ohodnocení",
+        "url" => "/admin/articles-rate",
+        "opravneni" => array(2,5)
+    ],
+    //redaktor, šéfredaktor
+    [
+        "nazev" => "Příspěvky od autorů",
+        "url" => "/admin/articles-all",
+        "opravneni" => array(3,4,5)
+    ],
+    //administrátor
     [
         "nazev" => "Uživatelé",
         "url" => "/admin/users",
-        "opravneni" => array(4)
+        "opravneni" => array(5)
     ]
 ];
+
 
 ?>
 <!doctype html>

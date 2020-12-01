@@ -1,21 +1,16 @@
 <?php
-    include "../head.php";
+include "../head.php";
 ?>
 
     <div class="container admin">
         <div class="row row-eq-height">
             <div class="col-lg-3">
-                <div class="col-menu">
-                    <ul class="nav nav-pills flex-column">
-                        <?php include "../menu.php"; ?>
-                    </ul>
-                </div>
+                <?php include "../menu.php"; ?>
             </div>
             <div class="col-lg-9">
                 <div class="col-content">
                     <div class="d-flex justify-content-between align-items-baseline py-0">
-                        <h4 class="my-0">Vaše příspěvky</h4>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#addNewForm">Přidat nový</button>
+                        <h4 class="my-0">Příspěvky k ohodnocení</h4>
                     </div>
                     <?php //Vypsání datatables
                     ini_set('display_errors', 1);
@@ -72,42 +67,6 @@
                         ?>
                         </tbody>
                     </table>
-                </div>
-                <div class="modal" id="addNewForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <form action="upload.php" method="post" enctype="multipart/form-data">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Nový příspěvek</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="articleName">Název příspěvku</label>
-                                            <input type="text" class="form-control" name="articleName">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="articleFile">Článek ve formátu PDF nebo DOC(X)</label>
-                                            <br />
-                                            <input type="file" class="" name="articleFile">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="articleName">Tématické číslo časopisu</label>
-                                            <select class="custom-select">
-                                                <option selected="selected">nevybráno</option>
-                                            </select>
-                                        </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-light" data-dismiss="modal">Zavřít</button>
-                                    <button type="submit" class="btn btn-primary">Uložit</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
