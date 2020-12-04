@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="cs">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            .tooltip {
+                position: relative;
+                display: inline-block;
+            }
+            
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 120px;
+                background-color: black;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+                top:14px;
+                left: 105%;
+            }
+            
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+            }
+
+            .badge {
+                background-color: grey; /* Green */
+                color: white;
+                padding: 5px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                margin: 4px 2px;
+                border-radius: 6px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h2 style="margin-bottom: 0px;">Ondřej Šrytr
+            <p class="badge">Administrátor</p>
+        </h2>
+
+        <div>
+            Email: 
+            <div class="tooltip"><p><a href="mailto:ondrejsrytr@onrejsrytr.cz">ondrejsrytr@ondrejsrytr.cz</a></p>
+            <span class="tooltiptext">Tooltip text</span>
+            </div>
+        </div>
+
+        <p style="margin: 0px 0px;">Stav: OK (email ověřen)</p>
+    </body>
+</html>
