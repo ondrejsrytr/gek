@@ -6,24 +6,37 @@
             .tooltip {
                 position: relative;
                 display: inline-block;
+                margin:80px 0 0 140px;
             }
-            
+
+            .tooltip:hover{
+                border-bottom:solid 2px;
+            }
+
             .tooltip .tooltiptext {
                 visibility: hidden;
-                width: 120px;
-                background-color: black;
-                color: #fff;
+                padding:0px 0px 0px 0px;
+                width: auto;
+                background-color: white;
+                box-shadow: 0px 0px 10px;
                 text-align: center;
+                border: solid 2px;
                 border-radius: 6px;
-                padding: 5px 0;
                 
-                /* Position the tooltip */
+                /* Position the tooltiptext */
                 position: absolute;
                 z-index: 1;
-                top:14px;
-                left: 105%;
+                bottom: 20px;
+                left: -30%;
             }
-            
+
+            .tooltip .tooltiptext h2{
+                margin: 0px 0px;
+            }
+
+            .tooltip .tooltiptext a{
+                font-size: 24px;
+            }
             .tooltip:hover .tooltiptext {
                 visibility: visible;
             }
@@ -35,24 +48,21 @@
                 text-align: center;
                 text-decoration: none;
                 display: inline-block;
-                margin: 4px 2px;
+                margin: 0px 0px;
                 border-radius: 6px;
             }
         </style>
     </head>
 
     <body>
-        <h2 style="margin-bottom: 0px;">Ondřej Šrytr
-            <p class="badge">Administrátor</p>
-        </h2>
-
-        <div>
-            Email: 
-            <div class="tooltip"><p><a href="mailto:ondrejsrytr@onrejsrytr.cz">ondrejsrytr@ondrejsrytr.cz</a></p>
-            <span class="tooltiptext">Tooltip text</span>
-            </div>
+        <div class="tooltip"><p style="margin-bottom: 0px;">jmeno_uzivatele</p>
+            <span class="tooltiptext">
+                <h2 style="font-weight: bold;">
+                    jmeno_uzivatele
+                    <div class="badge">role_uzivatele</div><br>
+                </h2>
+                <a href="mailto:toti@nepovim.cz">toti@nepovim.cz</a>
+            </span>
         </div>
-
-        <p style="margin: 0px 0px;">Stav: OK (email ověřen)</p>
     </body>
 </html>
