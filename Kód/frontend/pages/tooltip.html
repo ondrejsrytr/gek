@@ -6,19 +6,21 @@
             .tooltip {
                 position: relative;
                 display: inline-block;
-                margin:100px 0 0 140px;
+                margin:200px 0 0 140px;
             }
 
             .tooltip:hover{
                 border-bottom:solid 2px;
-                padding: 0% auto;
             }
 
             .tooltip .tooltiptext {
                 visibility: hidden;
                 text-align: left;
+                
+                /*Velikost tooltiptextu*/
                 width: auto;
-                padding: 0 10px; 
+                padding: 20px 50px 20px 20px; 
+
                 background-color: white;
                 box-shadow:0px 0px 10px;
                 text-align: center
@@ -27,9 +29,8 @@
                 /* Position the tooltiptext */
                 position: absolute;
                 z-index: 1;
-                bottom:16px;
-                left:50%;
-                margin-left: -65px;
+                bottom:80%;
+                left:0px;
             }
 
             .tooltip .tooltiptext p{
@@ -47,20 +48,20 @@
                 text-align: center;
                 text-decoration: none;
                 display: inline-block;
-                margin: 10px 0px;
+                margin: 5px 0px;
                 border-radius: 6px;
             }
         </style>
     </head>
 
     <body>
-        <div class="tooltip"><p style="margin-bottom: 0px;">jmeno_uzivatele</p>
+        <div class="tooltip"><p style="margin-bottom: 0px;">jmeno uzivatele</p>
             <span class="tooltiptext">
                 <p style="font-weight: bold;">
                     jmeno_uzivatele
                     <div class="badge">role_uzivatele</div><br>
+                    <a href="mailto:toti@nepovim.cz">toti@nepovim.cz</a>
                 </p>
-                <a href="mailto:toti@nepovim.cz">toti@nepovim.cz</a>
             </span>
         </div>
     </body>
