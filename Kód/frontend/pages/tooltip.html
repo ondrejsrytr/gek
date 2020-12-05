@@ -6,37 +6,36 @@
             .tooltip {
                 position: relative;
                 display: inline-block;
-                margin:80px 0 0 140px;
+                margin:100px 0 0 140px;
             }
 
             .tooltip:hover{
                 border-bottom:solid 2px;
+                padding: 0% auto;
             }
 
             .tooltip .tooltiptext {
                 visibility: hidden;
-                padding:0px 0px 0px 0px;
+                text-align: left;
                 width: auto;
+                padding: 0 10px; 
                 background-color: white;
-                box-shadow: 0px 0px 10px;
-                text-align: center;
-                border: solid 2px;
-                border-radius: 6px;
+                box-shadow:0px 0px 10px;
+                text-align: center
+                border-radius: 8px;
                 
                 /* Position the tooltiptext */
                 position: absolute;
                 z-index: 1;
-                bottom: 20px;
-                left: -30%;
+                bottom:16px;
+                left:50%;
+                margin-left: -65px;
             }
 
-            .tooltip .tooltiptext h2{
+            .tooltip .tooltiptext p{
                 margin: 0px 0px;
             }
 
-            .tooltip .tooltiptext a{
-                font-size: 24px;
-            }
             .tooltip:hover .tooltiptext {
                 visibility: visible;
             }
@@ -48,7 +47,7 @@
                 text-align: center;
                 text-decoration: none;
                 display: inline-block;
-                margin: 0px 0px;
+                margin: 10px 0px;
                 border-radius: 6px;
             }
         </style>
@@ -57,10 +56,10 @@
     <body>
         <div class="tooltip"><p style="margin-bottom: 0px;">jmeno_uzivatele</p>
             <span class="tooltiptext">
-                <h2 style="font-weight: bold;">
+                <p style="font-weight: bold;">
                     jmeno_uzivatele
                     <div class="badge">role_uzivatele</div><br>
-                </h2>
+                </p>
                 <a href="mailto:toti@nepovim.cz">toti@nepovim.cz</a>
             </span>
         </div>
