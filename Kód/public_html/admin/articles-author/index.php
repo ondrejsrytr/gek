@@ -34,52 +34,55 @@ include "../head.php";
                         die('Připojení k databázi selhalo: ' . $e->getMessage());
                     }
                     ?>
-                    <table id="main_table" class="table table-striped table-bordered">
-                        <thead>
-                        <th>Název článku</th>
-                        <th>Hodnotitel</th>
-                        <th>Datum ohodnocení</th>
-                        <th>Aktuálnost</th>
-                        <th>Originalita</th>
-                        <th>Odbornost</th>
-                        <th>Formát</th>
-                        </thead>
-                        <tbody>
-                        <?php
-                        //SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id
-                        $dotaz = "SELECT Clanky.nazev, B.id AS userid, B.jmeno as hodnotitel, datum_ohodnoceni, aktualnost, originalita, odbornost, format FROM Clanky_hodnoceni JOIN Clanky ON Clanky_hodnoceni.clanek = Clanky.id JOIN Users B ON Clanky_hodnoceni.hodnotitel = B.id WHERE Clanky.autor = ?;";
-                        $vysledek = $pdo->prepare($dotaz);
-                        $vysledek->execute(array($_SESSION['user']->getId()));
-                        $result = $vysledek->fetchAll(\PDO::FETCH_ASSOC);
-                        $pocet = $vysledek->rowCount();
-                        for ($i = 0; $i < $pocet; $i++) {
-                            echo '<tr>';
-                            echo '<td>';
-                            print $result[$i]["nazev"];
-                            echo '</td>';
-                            echo '<td>';
-                            print '<a target="blank" href="/user?&id='.$result[$i]["userid"].'">'.$result[$i]["hodnotitel"].'</a>';
-                            echo '</td>';
-                            echo '<td>';
-                            print $result[$i]["datum_ohodnoceni"];
-                            echo '</td>';
-                            echo '<td>';
-                            echo $result[$i]["aktualnost"];
-                            echo '</td>';
-                            echo '<td>';
-                            echo $result[$i]["originalita"];
-                            echo '</td>';
-                            echo '<td>';
-                            echo $result[$i]["odbornost"];
-                            echo '</td>';
-                            echo '<td>';
-                            echo $result[$i]["format"];
-                            echo '</td>';
-                            echo '</tr>';
-                        }
-                        ?>
-                        </tbody>
-                    </table>
+                    <div class="overflow-auto">
+
+                        <table id="main_table" class="table table-striped table-bordered overflow-auto">
+                            <thead>
+                            <th>Název článku</th>
+                            <th>Hodnotitel</th>
+                            <th>Datum ohodnocení</th>
+                            <th>Aktuálnost</th>
+                            <th>Originalita</th>
+                            <th>Odbornost</th>
+                            <th>Formát</th>
+                            </thead>
+                            <tbody>
+                            <?php
+                            //SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id
+                            $dotaz = "SELECT Clanky.nazev, B.id AS userid, B.jmeno as hodnotitel, datum_ohodnoceni, aktualnost, originalita, odbornost, format FROM Clanky_hodnoceni JOIN Clanky ON Clanky_hodnoceni.clanek = Clanky.id JOIN Users B ON Clanky_hodnoceni.hodnotitel = B.id WHERE Clanky.autor = ?;";
+                            $vysledek = $pdo->prepare($dotaz);
+                            $vysledek->execute(array($_SESSION['user']->getId()));
+                            $result = $vysledek->fetchAll(\PDO::FETCH_ASSOC);
+                            $pocet = $vysledek->rowCount();
+                            for ($i = 0; $i < $pocet; $i++) {
+                                echo '<tr>';
+                                echo '<td>';
+                                print $result[$i]["nazev"];
+                                echo '</td>';
+                                echo '<td>';
+                                print '<a target="blank" href="/user?&id='.$result[$i]["userid"].'">'.$result[$i]["hodnotitel"].'</a>';
+                                echo '</td>';
+                                echo '<td>';
+                                print $result[$i]["datum_ohodnoceni"];
+                                echo '</td>';
+                                echo '<td>';
+                                echo $result[$i]["aktualnost"];
+                                echo '</td>';
+                                echo '<td>';
+                                echo $result[$i]["originalita"];
+                                echo '</td>';
+                                echo '<td>';
+                                echo $result[$i]["odbornost"];
+                                echo '</td>';
+                                echo '<td>';
+                                echo $result[$i]["format"];
+                                echo '</td>';
+                                echo '</tr>';
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="modal" id="addNewForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
