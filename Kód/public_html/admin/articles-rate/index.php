@@ -1,7 +1,14 @@
 <?php
-include "../head.php";
+    include "../head.php";
 ?>
-
+    <script type="text/javascript">
+        //todo: pojmenovat funkci inteligentneji
+        //pisu to ve dve rano, nechte me bejt
+        function hodTamTenText(nazev, id) {
+            document.getElementById("nazevCl").value = nazev;
+            document.getElementById("idCl").value = id;
+        }
+    </script>
     <div class="container admin">
         <div class="row row-eq-height">
             <div class="col-lg-3">
@@ -10,7 +17,7 @@ include "../head.php";
             <div class="col-lg-9">
                 <div class="col-content">
                     <div class="d-flex justify-content-between align-items-baseline py-0">
-                        <h4 class="my-0">Příspěvky k ohodnocení</h4>
+                        <h4 class="my-0">Články k ohodnocení</h4>
                     </div>
                     <?php //Vypsání datatables
                     ini_set('display_errors', 1);
@@ -44,30 +51,113 @@ include "../head.php";
                             <tbody>
                             <?php
                             //SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id
-                            $dotaz = "SELECT Users.id AS userid, Users.jmeno, Clanky.id, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id";
+                            $dotaz = "SELECT Users.id AS userid, Users.jmeno, Clanky.id, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id WHERE Clanky.stav = 0";
                             $vysledek = $pdo->prepare($dotaz);
                             $vysledek->execute();
                             $result = $vysledek->fetchAll(\PDO::FETCH_ASSOC);
                             $pocet = $vysledek->rowCount();
                             for ($i = 0; $i < $pocet; $i++) {
-                                echo '<tr>';
-                                echo '<td>';
-                                print $result[$i]["nazev"];
-                                echo '</td>';
-                                echo '<td>';
-                                print '<a target="blank" href="/user?&id='.$result[$i]["userid"].'">'.$result[$i]["jmeno"].'</a>';
-                                echo '</td>';
-                                echo '<td>';
-                                print $result[$i]["datum_vydani"];
-                                echo '</td>';
-                                echo '<td>';
-                                echo '<a href="/upload/'.$result[$i]["id"].'.pdf" download="Clanek.pdf">Stáhnout</a>';
-                                echo '</td>';
-                                echo '</tr>';
+                                ?>
+                                <tr>
+                                    <td>
+                                        <?=$result[$i]["nazev"]?>
+                                    </td>
+                                    <td>
+                                        <a target="blank" href="/user?&id=<?=$result[$i]["userid"]?>"><?=$result[$i]["jmeno"]?></a>
+                                    </td>
+                                    <td>
+                                        <?=$result[$i]["datum_vydani"]?>
+                                    </td>
+                                    <td>
+                                        <a href="/upload/<?=$result[$i]["id"]?>.pdf" download="Clanek.pdf">Stáhnout</a>
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#hodnotitForm" onclick="hodTamTenText('<?=$result[$i]["nazev"]?>', '<?=$result[$i]["id"]?>')">Hodnotit</a>
+                                    </td>
+                                </tr>
+                                <?php
                             }
                             ?>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <div class="modal" id="hodnotitForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <form action="../articles-all/rate.php" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Hodnocení příspěvku</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="articleName">Název příspěvku</label>
+                                        <input type="text" class="form-control" name="articleName" id="nazevCl" disabled>
+                                        <input type="hidden" name="articleId" id="idCl">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="aktualnost">Aktuálnost</label>
+                                            <select class="custom-select" name="aktualnost">
+                                                <option selected="selected">1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="originalita">Originalita</label>
+                                            <select class="custom-select" name="originalita">
+                                                <option selected="selected">1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="odbornost">Odbornost</label>
+                                            <select class="custom-select" name="odbornost">
+                                                <option selected="selected">1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="format">Formát</label>
+                                            <select class="custom-select" name="format">
+                                                <option selected="selected">1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label for="articleApproved">Schváleno</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="checkbox" class="form-control" name="articleApproved">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-dismiss="modal">Zavřít</button>
+                                    <button type="submit" class="btn btn-primary">Uložit</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
