@@ -56,3 +56,9 @@ FROM Clanky_hodnoceni
 JOIN Clanky ON Clanky_hodnoceni.clanek = Clanky.id
 JOIN Users B ON Clanky_hodnoceni.hodnotitel = B.id
 WHERE Clanky.autor = ?;
+
+-- Vypiš články které jsou ohodnocené se jménem recenzenta
+SELECT A.jmeno, Clanky.nazev, Clanky.datum_vydani, Clanky.vybrany_r
+FROM Clanky INNER 
+JOIN Users A ON Clanky.autor = A.id
+JOIN Users B ON Clanky.vybrany_r = B.id;
