@@ -1,7 +1,6 @@
 <?php
     include "../head.php";
 ?>
-
     <div class="container admin">
         <div class="row row-eq-height">
             <div class="col-lg-3">
@@ -40,36 +39,64 @@
                             <th>Autor</th>
                             <th>Datum vydání</th>
                             <th>Odkaz ke stažení</th>
+                            <th>Recenzent</th>
                             </thead>
                             <tbody>
                             <?php
                             //SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id
-                            $dotaz = "SELECT Users.id AS userid, Users.jmeno, Clanky.id, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id WHERE Clanky.stav = 0";
+                            $dotaz = "SELECT Users.id AS userid, Users.jmeno, Clanky.id, Clanky.nazev, Clanky.datum_vydani, vybrany_r FROM Clanky INNER JOIN Users on Clanky.autor = Users.id WHERE Clanky.stav = 0";
                             $vysledek = $pdo->prepare($dotaz);
                             $vysledek->execute();
                             $result = $vysledek->fetchAll(\PDO::FETCH_ASSOC);
                             $pocet = $vysledek->rowCount();
                             for ($i = 0; $i < $pocet; $i++) {
-                                echo '<tr>';
-                                echo '<td>';
-                                print $result[$i]["nazev"];
-                                echo '</td>';
-                                echo '<td>';
-                                print '<a target="blank" href="/user?&id='.$result[$i]["userid"].'">'.$result[$i]["jmeno"].'</a>';
-                                echo '</td>';
-                                echo '<td>';
-                                print $result[$i]["datum_vydani"];
-                                echo '</td>';
-                                echo '<td>';
-                                echo '<a href="/upload/'.$result[$i]["id"].'.pdf" download="Clanek.pdf">Stáhnout</a>';
-                                echo '</td>';
-                                echo '<td>';
-                                echo '<select>';
+                                ?>
+                                <tr>
+                                    <td>
+                                        <?=$result[$i]["nazev"]?>
+                                    </td>
+                                    <td>
+                                        <a target="blank" href="/user?&id=<?=$result[$i]["userid"]?>"><?=$result[$i]["jmeno"]?></a>
+                                    </td>
+                                    <td>
+                                        <?=$result[$i]["datum_vydani"]?>
+                                    </td>
+                                    <td>
+                                        <a href="/upload/<?=$result[$i]["id"]?>.pdf" download="Clanek.pdf">Stáhnout</a>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        $opravneni = "2";
+                                        $conn = new mysqli('sql4.webzdarma.cz', 'gekwzcz3751', '&976l3lW9b^12.8J)ykv', 'gekwzcz3751');
+                                        $stmt = $conn->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
 
-                                echo '</select>';
-                                echo '</td>';
-                                echo '</tr>';
 
+                                        $stmt->bind_param("i", $opravneni);
+                                        $stmt->execute();
+
+                                        $r_result = $stmt->get_result();
+
+                                        echo '<form action="recenzent_change.php" method="post" class="auto-submit">';
+                                        echo "<input type='hidden' name='clanek_id' value='".$result[$i]['id']."'>";
+                                        echo '<select name="recenzent_id" id="">';
+                                        echo '<option value="0">Nevybrán</option>';
+                                        while ($row = $r_result->fetch_assoc()) {
+                                            if($result[$i]['vybrany_r'] == $row['id']) {
+                                                echo '<option selected value="'.$row['id'].'">'.$row['jmeno'].'</option>';
+                                            }
+                                            else {
+                                                echo '<option value="'.$row['id'].'">'.$row['jmeno'].'</option>';
+                                            }
+                                        }
+                                        echo '</select>';
+                                        echo '</form>';
+
+                                        $stmt->close();
+                                        $conn->close();
+                                        ?>
+                                    </td>
+                                </tr>
+                                <?php
                             }
                             ?>
                             </tbody>

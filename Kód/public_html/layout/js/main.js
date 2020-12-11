@@ -10,6 +10,11 @@ window.addEventListener("load", function() {
     document.querySelectorAll("iframe").forEach(function (el) {
         el.remove();
     });
+    document.querySelectorAll(".auto-submit").forEach(function(el) {
+        el.querySelector("select").addEventListener("change", function() {
+            $(el).submit();
+        });
+    });
 });
 
 function sendMailVerificationRequest(email) {
