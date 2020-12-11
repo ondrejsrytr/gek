@@ -51,9 +51,9 @@
                             <tbody>
                             <?php
                             //SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id
-                            $dotaz = "SELECT Users.id AS userid, Users.jmeno, Clanky.id, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id WHERE Clanky.stav = 0";
+                            $dotaz = "SELECT Users.id AS userid, Users.jmeno, Clanky.id, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id WHERE (Clanky.stav = 0 AND Clanky.vybrany_r = ?)";
                             $vysledek = $pdo->prepare($dotaz);
-                            $vysledek->execute();
+                            $vysledek->execute(array($_SESSION['user']->GetId()));
                             $result = $vysledek->fetchAll(\PDO::FETCH_ASSOC);
                             $pocet = $vysledek->rowCount();
                             for ($i = 0; $i < $pocet; $i++) {
