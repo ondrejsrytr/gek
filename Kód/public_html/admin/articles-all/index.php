@@ -78,7 +78,7 @@
 
                                         echo '<form action="recenzent_change.php" method="post" class="auto-submit">';
                                         echo "<input type='hidden' name='clanek_id' value='".$result[$i]['id']."'>";
-                                        echo '<select name="recenzent_id" id="">';
+                                        echo '<select class="form-control" name="recenzent_id">';
                                         echo '<option value="0">Nevybrán</option>';
                                         while ($row = $r_result->fetch_assoc()) {
                                             if($result[$i]['vybrany_r'] == $row['id']) {
