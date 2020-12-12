@@ -57,8 +57,17 @@ JOIN Clanky ON Clanky_hodnoceni.clanek = Clanky.id
 JOIN Users B ON Clanky_hodnoceni.hodnotitel = B.id
 WHERE Clanky.autor = ?;
 
--- Vypiš články které jsou ohodnocené se jménem recenzenta
-SELECT A.jmeno, Clanky.nazev, Clanky.datum_vydani, Clanky.vybrany_r
+-- Vypiš články které jsou ohodnocené se jménem recenzenta a zároveň musí být nevydané a recenzent musí být platný
+SELECT A.jmeno, Clanky.nazev, Clanky.datum_vydani, Clanky.vybrany_r, B.jmeno as jakyrecenzent 
 FROM Clanky INNER 
-JOIN Users A ON Clanky.autor = A.id
-JOIN Users B ON Clanky.vybrany_r = B.id;
+JOIN Users A ON Clanky.autor = A.id 
+JOIN Users B ON Clanky.vybrany_r = B.id
+WHERE Clanky.stav = 0 AND vybrany_r > 0
+
+-- Vypiš články které jsou ohodnocené se jménem recenzenta a jejich hodnocením ale zároveň články které nejsou vydané a ohodnotil je platný recenzent
+SELECT A.jmeno, Clanky.id, Clanky.stav, Clanky.nazev, Clanky.datum_vydani, Clanky.vybrany_r, B.jmeno as nejakyrecenzent, Clanky_hodnoceni.aktualnost, Clanky_hodnoceni.originalita, Clanky_hodnoceni.odbornost, Clanky_hodnoceni.format 
+FROM Clanky 
+INNER JOIN Users A ON Clanky.autor = A.id 
+INNER JOIN Users B ON Clanky.vybrany_r = B.id 
+INNER JOIN Clanky_hodnoceni ON Clanky.id = Clanky_hodnoceni.clanek 
+WHERE Clanky.stav = 0 AND vybrany_r > 0
