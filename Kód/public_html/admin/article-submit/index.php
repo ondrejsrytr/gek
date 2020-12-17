@@ -51,7 +51,7 @@
                             <tbody>
                             <?php
                             //SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id
-                            $dotaz = "SELECT A.jmeno, Clanky.id, Clanky.stav, Clanky.nazev, Clanky.datum_vydani, Clanky.vybrany_r, B.jmeno as nejakyrecenzent, Clanky_hodnoceni.aktualnost, Clanky_hodnoceni.originalita, Clanky_hodnoceni.odbornost, Clanky_hodnoceni.format FROM Clanky INNER JOIN Users A ON Clanky.autor = A.id INNER JOIN Users B ON Clanky.vybrany_r = B.id INNER JOIN Clanky_hodnoceni ON Clanky.id = Clanky_hodnoceni.clanek WHERE Clanky.stav = 0 AND vybrany_r > 0 ";
+                            $dotaz = "SELECT A.jmeno, A.id AS userid, Clanky.id, Clanky.stav, Clanky.nazev, Clanky.datum_vydani, Clanky.vybrany_r, B.jmeno as nejakyrecenzent, Clanky_hodnoceni.aktualnost, Clanky_hodnoceni.originalita, Clanky_hodnoceni.odbornost, Clanky_hodnoceni.format FROM Clanky INNER JOIN Users A ON Clanky.autor = A.id INNER JOIN Users B ON Clanky.vybrany_r = B.id INNER JOIN Clanky_hodnoceni ON Clanky.id = Clanky_hodnoceni.clanek WHERE Clanky.stav = 0 AND vybrany_r > 0 ";
                             $vysledek = $pdo->prepare($dotaz);
                             $vysledek->execute();
                             $result = $vysledek->fetchAll(\PDO::FETCH_ASSOC);
@@ -63,7 +63,19 @@
                                         <?=$result[$i]["nazev"]?>
                                     </td>
                                     <td>
-                                        <a target="blank" href="/user?&id=<?=$result[$i]["userid"]?>"><?=$result[$i]["jmeno"]?></a>
+                                        <?php
+                                        print '
+                                            <div data-tooltip-id="'.$result[$i]["userid"].'" data-tooltip-name="'.$result[$i]["jmeno"].'" class="html-tooltip"><a href="/user?&id='.$result[$i]["id"].'">'.$result[$i]["jmeno"].'</a>
+                                                <span class="tooltiptext">
+                                                    <p>
+                                                        <b>jmeno_uzivatele</b>
+                                                        <span class="badge badge-secondary">Secondary</span><br>
+                                                        <a href="mailto:toti@nepovim.cz">toti@nepovim.cz</a>
+                                                    </p>
+                                                </span>
+                                            </div>
+                                        ';
+                                        ?>
                                     </td>
                                     <td>
                                         <?=$result[$i]["datum_vydani"]?>

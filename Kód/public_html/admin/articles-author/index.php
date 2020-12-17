@@ -60,7 +60,17 @@ include "../head.php";
                                 print $result[$i]["nazev"];
                                 echo '</td>';
                                 echo '<td>';
-                                print '<a target="blank" href="/user?&id='.$result[$i]["userid"].'">'.$result[$i]["hodnotitel"].'</a>';
+                                print '
+                                            <div data-tooltip-id="'.$result[$i]["userid"].'" data-tooltip-name="'.$result[$i]["jmeno"].'" class="html-tooltip"><a href="/user?&id='.$result[$i]["userid"].'">'.$result[$i]["hodnotitel"].'</a>
+                                                <span class="tooltiptext">
+                                                    <p>
+                                                        <b>jmeno_uzivatele</b>
+                                                        <span class="badge badge-secondary">Secondary</span><br>
+                                                        <a href="mailto:toti@nepovim.cz">toti@nepovim.cz</a>
+                                                    </p>
+                                                </span>
+                                            </div>
+                                        ';
                                 echo '</td>';
                                 echo '<td>';
                                 print $result[$i]["datum_ohodnoceni"];

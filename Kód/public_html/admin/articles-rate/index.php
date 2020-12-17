@@ -63,7 +63,19 @@
                                         <?=$result[$i]["nazev"]?>
                                     </td>
                                     <td>
-                                        <a target="blank" href="/user?&id=<?=$result[$i]["userid"]?>"><?=$result[$i]["jmeno"]?></a>
+                                        <?php
+                                        print '
+                                            <div data-tooltip-id="'.$result[$i]["userid"].'" data-tooltip-name="'.$result[$i]["jmeno"].'" class="html-tooltip"><a href="/user?&id='.$result[$i]["id"].'">'.$result[$i]["jmeno"].'</a>
+                                                <span class="tooltiptext">
+                                                    <p>
+                                                        <b>jmeno_uzivatele</b>
+                                                        <span class="badge badge-secondary">Secondary</span><br>
+                                                        <a href="mailto:toti@nepovim.cz">toti@nepovim.cz</a>
+                                                    </p>
+                                                </span>
+                                            </div>
+                                        ';
+                                        ?>
                                     </td>
                                     <td>
                                         <?=$result[$i]["datum_vydani"]?>

@@ -14,5 +14,6 @@
             $dotaz = "INSERT INTO Historie (kdo, co) VALUES (?,?)";
             $vysledek = $pdo->prepare($dotaz);
             $vysledek->execute([$_SESSION['user']->GetId(), $activity]);
+            $pdo = null;
         }
     }

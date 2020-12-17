@@ -32,3 +32,32 @@ header .dropdown-toggle, .nav-link {
 .margin-bottom-20 {
     margin-bottom: 20px;
 }
+
+
+.html-tooltip {
+    position: relative;
+    display: inline-block;
+}
+.html-tooltip .tooltiptext {
+    visibility: hidden;
+    text-align: left;
+
+    /*Velikost tooltiptextu*/
+    width: auto;
+    padding: 20px 50px 20px 20px;
+
+    background-color: white;
+    box-shadow:0px 0px 10px rgba(0, 0, 0,0.2);
+
+    /* Position the tooltiptext */
+    position: absolute;
+    z-index: 1;
+    bottom: 20px;
+    left: 0px;
+}
+.html-tooltip .tooltiptext p{
+    margin: 0px 0px;
+}
+.html-tooltip:hover .tooltiptext {
+    visibility: visible;
+}

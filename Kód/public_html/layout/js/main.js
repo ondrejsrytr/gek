@@ -15,6 +15,7 @@ window.addEventListener("load", function() {
             $(el).submit();
         });
     });
+    attachTooltips();
 });
 
 function sendMailVerificationRequest(email) {
@@ -54,4 +55,28 @@ function checkForEmailVerification(code) {
     xhttp.open("POST", "//gek.wz.cz/edit-profile/checkverify.php", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("code=" + code);
+}
+
+function attachTooltips() {
+    document.querySelectorAll(".html-tooltip").forEach(function(el) {
+        el.addEventListener("mouseenter", function(event) {
+            el.querySelector(".tooltiptext").innerHTML = "";
+            el.querySelector(".tooltiptext").style.display = "none";
+            let user_id = el.getAttribute("data-tooltip-id");
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                var resp = this.responseText;
+                resp = resp.substring(resp.indexOf("<p>"));
+                el.querySelector(".tooltiptext").innerHTML = resp;
+                //odstraní probliknutí, ale to ještě pak časem doladím
+                setTimeout(function() {
+                    el.querySelector(".tooltiptext").style.display = "block";
+                }, 50);
+
+            };
+            xhttp.open("POST", "//gek.wz.cz/classes/TooltipContent.php", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("user_id=" + user_id);
+        });
+    });
 }

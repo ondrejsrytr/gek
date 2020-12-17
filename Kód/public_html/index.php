@@ -71,7 +71,19 @@ include ROOT . "session.php";
                 print $result[$i]["nazev"];
                 echo '</td>';
                 echo '<td>';
-                print '<a target="blank" href="/user?&id='.$result[$i]["id"].'">'.$result[$i]["jmeno"].'</a>';
+                //print '<a href="/user?&id='.$result[$i]["id"].'">'.$result[$i]["jmeno"].'</a>'; //verze bez tooltipu
+                print '
+                    <div data-tooltip-id="'.$result[$i]["id"].'" data-tooltip-name="'.$result[$i]["jmeno"].'" class="html-tooltip"><a href="/user?&id='.$result[$i]["id"].'">'.$result[$i]["jmeno"].'</a>
+                        <span class="tooltiptext">
+                            <p>
+                                <b>jmeno_uzivatele</b>
+                                <span class="badge badge-secondary">Secondary</span><br>
+                                <a href="mailto:toti@nepovim.cz">toti@nepovim.cz</a>
+                            </p>
+                        </span>
+                    </div>
+                    
+                    ';
                 echo '</td>';
                 echo '<td>';
                 print $result[$i]["datum_vydani"];
