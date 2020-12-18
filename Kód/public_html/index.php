@@ -98,6 +98,73 @@ include ROOT . "session.php";
         </table>
     </main>
 
+
+    <?php
+        if(!isset($_SESSION['oznameni']) && isset($_SESSION['user']) && ($_SESSION['user']->getOpravneni() == 2 || $_SESSION['user']->getOpravneni() == 3 || $_SESSION['user']->getOpravneni() == 4)) {
+            $_SESSION['oznameni'] = true;
+
+            $notify_text = null;
+
+            //recenzent
+            if($_SESSION['user']->getOpravneni() == 2) {
+                include_once ROOT."classes/db.php";
+                $dotaz = "SELECT Users.id FROM Clanky INNER JOIN Users on Clanky.autor = Users.id WHERE (Clanky.stav = 0 AND Clanky.vybrany_r = ?)";
+                $vysledek = $pdo->prepare($dotaz);
+                $vysledek->execute(array($_SESSION['user']->GetId()));
+                $pocet = $vysledek->rowCount();
+                if($pocet == 0) {
+                    $notify_text = "Dobrý den, vypadá to, že všechny články máte ohodnocené.";
+                }
+                else if($pocet == 1) {
+                    $notify_text = "Dobrý den, v administraci máte k ohodnocení ".$pocet." článek.";
+                }
+                else {
+                    $notify_text = "Dobrý den, v administraci máte k ohodnocení ".$pocet." článků.";
+                }
+            }
+            //redaktor, šéfredaktor
+            else if($_SESSION['user']->getOpravneni() == 3 || $_SESSION['user']->getOpravneni() == 4) {
+                include_once ROOT."classes/db.php";
+                $dotaz = "SELECT 1 FROM Clanky INNER JOIN Users A ON Clanky.autor = A.id INNER JOIN Users B ON Clanky.vybrany_r = B.id INNER JOIN Clanky_hodnoceni ON Clanky.id = Clanky_hodnoceni.clanek WHERE Clanky.stav = 0 AND vybrany_r > 0 ";
+                $vysledek = $pdo->prepare($dotaz);
+                $vysledek->execute();
+                $pocet = $vysledek->rowCount();
+                $notify_text = "Dobrý den, v administraci ";
+                if($pocet > 0) {
+                    if($pocet == 1) {
+                        $notify_text .= "vás čeká 1 článek na vydání ";
+                    }
+                    else {
+                        $notify_text .= $pocet."vás čeká článků na vydání ";
+                    }
+                }
+                $dotaz = "SELECT 1 FROM Clanky WHERE vybrany_r is null";
+                $vysledek = $pdo->prepare($dotaz);
+                $vysledek->execute();
+                $pocet2 = $vysledek->rowCount();
+                if($pocet > 0 && $pocet2 > 0) $notify_text .= "a ";
+                else if($pocet2 > 0) {
+                    $notify_text .= $pocet2." příspěvků nemá přiřazeného recenzenta";
+                }
+            }
+
+            echo '
+                <div class="toast" data-autohide="false">
+                    <div class="toast-header">
+                        <strong class="mr-auto text-primary">Oznámení</strong>
+                        <!--<small class="text-muted">5 mins ago</small>-->
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+                    </div>
+                    <div class="toast-body">
+                        '.$notify_text.'
+                    </div>
+                </div>
+                <script>$(".toast").toast("show");</script>
+            ';
+        }
+    ?>
+
+
     <?php
     include ROOT . "layout/footer.php";
     ?>
