@@ -67,3 +67,14 @@ header .dropdown-toggle, .nav-link {
     right: 30px;
     bottom: 30px;
 }
+
+table.pure-table {
+    border-collapse: collapse;
+}
+table.pure-table th {
+    text-align: center;
+}
+table.pure-table td, table.pure-table th {
+    border: 1px solid silver;
+    padding: 5px 10px;
+}
