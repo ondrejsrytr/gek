@@ -32,6 +32,11 @@ $_SERVER['menu'] = [
         "url" => "/admin/articles-all",
         "opravneni" => array(3,4,5)
     ],
+    [ //redaktor, šéfredaktor, admin // Toto přidá novou položku na které pracuju, na github se to pak bude dávat lépe - Smáža
+        "nazev" => "Příspěvky na vydání",
+        "url" => "/admin/articles-submit",
+        "opravneni" => array(3,4,5)
+    ],
     //administrátor
     [
         "nazev" => "Uživatelé",

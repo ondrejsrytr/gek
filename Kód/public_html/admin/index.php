@@ -9,7 +9,8 @@ include "head.php";
             <div class="col-lg-9">
                 <div class="col-content">
                     <!-- OBSAH STRÁNKY -->
-                    <h4 class="my-0">Výchozí stránka</h4>
+                    <h4 class="my-0">Dashboard</h4>
+
                 </div>
             </div>
         </div>
