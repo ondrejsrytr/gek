@@ -1,4 +1,7 @@
 <?php
+    define('ROOT', "/3w/users/g/gek.wz.cz/web/");
+    include_once ROOT."classes/ActivityLog.php";
+
     function test_input($data) {
         $data = trim($data);
         $data = stripslashes($data);
@@ -34,5 +37,6 @@
     $dotaz = "UPDATE Clanky SET vybrany_r = ? WHERE id = ?";
     $vysledek = $pdo->prepare($dotaz);
     $vysledek->execute(array($recenzent_id, $clanek_id));
+    ActivityLog::Log('Přiřazen recenzent '.$recenzent_id.' k článku '.$clanek_id);
 
     header("Location: index.php");

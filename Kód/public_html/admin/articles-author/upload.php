@@ -4,6 +4,7 @@
 define('ROOT', "/3w/users/g/gek.wz.cz/web/");
 include_once ROOT."classes/db.php";
 include_once ROOT."classes/User.php";
+include_once ROOT."classes/ActivityLog.php";
 include ROOT."session.php";
 
 $dotaz = "INSERT INTO Clanky (nazev, autor) VALUES(?,?)";
@@ -17,6 +18,7 @@ echo $last_id;
 
 if (move_uploaded_file($_FILES['articleFile']['tmp_name'], $uploadfile)) {
     echo "Upload byl dobrej"; //Ondřej je zlej ;-(
+    ActivityLog::Log('Nahrán článek '.$last_id);
 } else {
     echo "Possible file upload attack!\n";
 }

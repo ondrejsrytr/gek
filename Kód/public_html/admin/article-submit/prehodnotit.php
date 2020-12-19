@@ -12,6 +12,7 @@ $dotaz = "DELETE FROM Clanky_hodnoceni WHERE clanek = ?";
 $vysledek = $pdo->prepare($dotaz);
 $vysledek->execute(array($_POST["clanekid"]));
 
+ActivityLog::Log('Článek '.$_POST['clanekid'].' odeslán k přehodnocení');
 
 header('Location: index.php');
 
