@@ -1,6 +1,7 @@
 <?php
     define('ROOT', "/3w/users/g/gek.wz.cz/web/");
     include_once ROOT."classes/User.php";
+    include_once ROOT."classes/ActivityLog.php";
     include ROOT."session.php";
 
     function test_input($data) {
@@ -26,6 +27,7 @@
                             "message" => "Uživatelské jméno bylo úspěšně změneno",
                             "alert_class" => "alert-success"
                         ));
+                        ActivityLog::Log('Změna uživatelského jména');
                     }
                     else {
                         array_push($_SESSION['edit_profile_feedback'], array(

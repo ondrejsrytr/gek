@@ -42,6 +42,11 @@ $_SERVER['menu'] = [
         "nazev" => "Uživatelé",
         "url" => "/admin/users",
         "opravneni" => array(5)
+    ],
+    [
+        "nazev" => "Historie uživ. akcí",
+        "url" => "/admin/users-history",
+        "opravneni" => array(5)
     ]
 ];
 

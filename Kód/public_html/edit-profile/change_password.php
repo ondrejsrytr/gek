@@ -31,6 +31,7 @@
                         "message" => "Heslo bylo úspěšně změněno",
                         "alert_class" => "alert-success"
                     ));
+                    ActivityLog::Log('Změna hesla');
                 }
                 else {
                     array_push($_SESSION['edit_profile_feedback2'], array(
