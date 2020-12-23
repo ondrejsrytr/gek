@@ -138,13 +138,22 @@ include ROOT . "session.php";
                         $notify_text .= $pocet."vás čeká článků na vydání ";
                     }
                 }
-                $dotaz = "SELECT 1 FROM Clanky WHERE vybrany_r is null";
+                $dotaz = "SELECT 1 FROM Clanky WHERE vybrany_r is null AND stav = 0";
                 $vysledek = $pdo->prepare($dotaz);
                 $vysledek->execute();
                 $pocet2 = $vysledek->rowCount();
                 if($pocet > 0 && $pocet2 > 0) $notify_text .= "a ";
                 else if($pocet2 > 0) {
-                    $notify_text .= $pocet2." příspěvků nemá přiřazeného recenzenta";
+                    if($pocet2 == 1) {
+                        $notify_text .= $pocet2." příspěvek nemá přiřazeného recenzenta";
+                    }
+                    else if($pocet2 >= 2 && $pocet2 <= 4) {
+                        $notify_text .= $pocet2." příspěvky nemají přiřazeného recenzenta";
+                    }
+                    else {
+                        $notify_text .= $pocet2." příspěvků nemají přiřazeného recenzenta";
+                    }
+
                 }
             }
 
