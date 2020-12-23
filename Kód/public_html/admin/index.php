@@ -1,46 +1,120 @@
 <?php
 include "head.php";
 ?>
-    <div class="container admin">
-        <div class="row row-eq-height">
-            <div class="col-lg-3">
-                <?php include "menu.php"; ?>
-            </div>
-            <div class="col-lg-9">
-                <div class="col-content">
-                    <!-- OBSAH STRÁNKY -->
-                    <h4 class="my-0">Dashboard</h4>
-                    <div style="height: 100px;"></div>
-                    <h5>Poslední aktivita</h5>
-                    <table class="pure-table">
-                        <?php
-                            include ROOT."classes/db.php";
-                            $dotaz = $pdo->prepare("SELECT co, datum FROM Historie WHERE kdo = ? LIMIT 5");
-                            $vysledek = $dotaz->execute([$_SESSION['user']->getId()]);
-                            $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
-                            if($dotaz->rowCount() > 0) {
-                                echo '<tr>
-                                        <th>Datum</th>
-                                        <th>Aktivita</th>
-                                      </tr>';
-                                foreach ($vysledky as $aktivita) {
-                                    echo '<tr>
-                                            <td>'.$aktivita['datum'].'</td>
-                                            <td>'.$aktivita['co'].'</td>
-                                      </tr>';
-                                }
-                            }
-                            else {
-                                echo "<p>Zatím neevidujeme žádnou vaší aktivitu</p>";
-                            }
+<?php
+    //UPOZORNĚNÍ PRO FRONTENĎÁKY!!!
+    //Není již nutné používat třídy podobné jako my-2, upravil jsem CSS tak, aby všechny třídy začínající na 'col' ve třídě 'admin' měly horní margin
+?>
+<div class="container-fluid admin">
+    <div class="row">
+        <div class="col-lg-2">
+            <?php include "menu.php"; ?>
+        </div>
+        <div class="col-lg-10">
+            <div class="col-content">
+                <!-- OBSAH STRÁNKY -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-6">
+                            <h1>Projekt GEK – časopisy a články</h1>
+                            <p>Tento projekt byl vytvořen studenty Lukáš Smaženka, Ondřej Šrytr, František Bartuněk, Milan Zatloukal, Dmytro Radchuk v rámci předmětu ŘSP – Řízení softwarových projektů</p>
+                            <h2>Instrukce pro autory:</h2>
+                            <p>Autoří zasílají své příspěvky do redakce časopisu pomocí formuláře v levém menu. Ty musí být ve shodě s Pokyny pro autory:</p>
+                            <a href=“http://www.vspj.cz/soubory/download/id/7344“>Stáhnout pokyny</a>
+                            a ve formátu, požadovaném šablonou
+                            <a href=“https://www.vspj.cz/soubory/download/id/4186“>Stáhnout šablonu</a>
+                            <br><br>
+                            <h2>Redakční rada</h2>
+                            <p>Recenzenti:</p>
+                            <?php
+                                include ROOT."classes/db.php";
+                                $dotaz = $pdo->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
+                                $vysledky = $dotaz->execute([2]);
+                                $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
 
-                            $pdo = null;
-                        ?>
-                    </table>
+                                foreach($vysledky as $user) {
+                                    print '
+                                        <div data-tooltip-id="'.$user['id'].'" class="html-tooltip"><a href="/user?&id='.$user["id"].'">'.$user["jmeno"].'</a>
+                                            <span class="tooltiptext">
+                                                <p>
+                                                    <b>jmeno_uzivatele</b>
+                                                    <span class="badge badge-secondary">Secondary</span><br>
+                                                    <a href="mailto:toti@nepovim.cz">toti@nepovim.cz</a>
+                                                </p>
+                                            </span>
+                                        </div>
+                                        <br>
+                                    ';
+                                }
+                            ?>
+                            <br><p>Redaktoři:</p>
+                            <?php
+                                $dotaz = $pdo->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
+                                $vysledky = $dotaz->execute([3]);
+                                $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
+
+                                foreach($vysledky as $user) {
+                                    print '
+                                            <div data-tooltip-id="'.$user['id'].'" class="html-tooltip"><a href="/user?&id='.$user["id"].'">'.$user["jmeno"].'</a>
+                                                <span class="tooltiptext">
+                                                </span>
+                                            </div>
+                                            <br>
+                                        ';
+                                }
+                            ?>
+                            <br><p>Šéfredaktoři:</p>
+                            <?php
+                            $dotaz = $pdo->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
+                            $vysledky = $dotaz->execute([4]);
+                            $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
+
+                            foreach($vysledky as $user) {
+                                print '
+                                            <div data-tooltip-id="'.$user['id'].'" class="html-tooltip"><a href="/user?&id='.$user["id"].'">'.$user["jmeno"].'</a>
+                                                <span class="tooltiptext">
+                                                </span>
+                                            </div>
+                                            <br>
+                                        ';
+                            }
+                            ?>
+
+                        </div>
+                        <div class="col-6">
+                            <h5>Poslední aktivita</h5>
+                            <table class="table table-striped">
+                                <?php
+                                include ROOT . "classes/db.php";
+                                $dotaz = $pdo->prepare("SELECT co, datum FROM Historie WHERE kdo = ? LIMIT 5");
+                                $vysledek = $dotaz->execute([$_SESSION['user']->getId()]);
+                                $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
+                                if ($dotaz->rowCount() > 0) {
+                                    echo '<thead><tr>
+                                <th>Datum</th>
+                                <th>Aktivita</th>
+                                </tr></thead>';
+                                    foreach ($vysledky as $aktivita) {
+                                        echo '<tr>
+                                    <td>' . $aktivita['datum'] . '</td>
+                                    <td>' . $aktivita['co'] . '</td>
+                                </tr>';
+                                    }
+                                } else {
+                                    echo "<p>Zatím neevidujeme žádnou vaší aktivitu</p>";
+                                }
+
+                                $pdo = null;
+                                ?>
+                            </table>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
+</div>
 <?php
 include "foot.php";
 ?>
