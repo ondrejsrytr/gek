@@ -2,8 +2,8 @@
 include "head.php";
 ?>
 <?php
-    //UPOZORNĚNÍ PRO FRONTENĎÁKY!!!
-    //Není již nutné používat třídy podobné jako my-2, upravil jsem CSS tak, aby všechny třídy začínající na 'col' ve třídě 'admin' měly horní margin
+//UPOZORNĚNÍ PRO FRONTENĎÁKY!!!
+//Není již nutné používat třídy podobné jako my-2, upravil jsem CSS tak, aby všechny třídy začínající na 'col' ve třídě 'admin' měly horní margin
 ?>
 <div class="container-fluid admin">
     <div class="row">
@@ -15,26 +15,26 @@ include "head.php";
                 <!-- OBSAH STRÁNKY -->
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-6">
-                            <h1>Projekt GEK – časopisy a články</h1>
-                            <p>Tento projekt byl vytvořen studenty Lukáš Smaženka, Ondřej Šrytr, František Bartuněk, Milan Zatloukal, Dmytro Radchuk v rámci předmětu ŘSP – Řízení softwarových projektů</p>
-                            <h2>Instrukce pro autory:</h2>
-                            <p>Autoří zasílají své příspěvky do redakce časopisu pomocí formuláře v levém menu. Ty musí být ve shodě s Pokyny pro autory:</p>
-                            <a href=“http://www.vspj.cz/soubory/download/id/7344“>Stáhnout pokyny</a>
-                            a ve formátu, požadovaném šablonou
-                            <a href=“https://www.vspj.cz/soubory/download/id/4186“>Stáhnout šablonu</a>
-                            <br><br>
-                            <h2>Redakční rada</h2>
-                            <p>Recenzenti:</p>
-                            <?php
-                                include ROOT."classes/db.php";
-                                $dotaz = $pdo->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
-                                $vysledky = $dotaz->execute([2]);
-                                $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
+                        <div class="col-md-6">
+                            <div class="jumbotron bg-white py-0">
+                                <h1 class="display-4">Projekt GEK – časopisy a články</h1>
+                                <p>Tento projekt byl vytvořen studenty Lukáš Smaženka, Ondřej Šrytr, František Bartuněk, Milan Zatloukal, Dmytro Radchuk v rámci předmětu ŘSP – Řízení softwarových projektů</p>
+                                <hr class="my-4">
+                                <h3>Instrukce pro autory:</h3>
+                                <p>Autoří zasílají své příspěvky do redakce časopisu pomocí formuláře v levém menu. Ty musí být ve shodě s Pokyny pro autory:</p>
+                                <a href=“http://www.vspj.cz/soubory/download/id/7344“>Stáhnout pokyny</a> a ve formátu, požadovaném šablonou <a href=“https://www.vspj.cz/soubory/download/id/4186“>Stáhnout šablonu</a> <br><br>
+                                    <hr class="my-4">
+                                    <h3>Redakční rada</h3>
+                                    <p>Recenzenti:</p>
+                                    <?php
+                                    include ROOT . "classes/db.php";
+                                    $dotaz = $pdo->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
+                                    $vysledky = $dotaz->execute([2]);
+                                    $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
 
-                                foreach($vysledky as $user) {
-                                    print '
-                                        <div data-tooltip-id="'.$user['id'].'" class="html-tooltip"><a href="/user?&id='.$user["id"].'">'.$user["jmeno"].'</a>
+                                    foreach ($vysledky as $user) {
+                                        print '
+                                        <div data-tooltip-id="' . $user['id'] . '" class="html-tooltip"><a href="/user?&id=' . $user["id"] . '">' . $user["jmeno"] . '</a>
                                             <span class="tooltiptext">
                                                 <p>
                                                     <b>jmeno_uzivatele</b>
@@ -45,43 +45,47 @@ include "head.php";
                                         </div>
                                         <br>
                                     ';
-                                }
-                            ?>
-                            <br><p>Redaktoři:</p>
-                            <?php
-                                $dotaz = $pdo->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
-                                $vysledky = $dotaz->execute([3]);
-                                $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
+                                    }
+                                    ?>
+                                    <br>
+                                    <hr class="my-4">
+                                    <h5>Redaktoři:</h5>
+                                    <?php
+                                    $dotaz = $pdo->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
+                                    $vysledky = $dotaz->execute([3]);
+                                    $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
 
-                                foreach($vysledky as $user) {
-                                    print '
-                                            <div data-tooltip-id="'.$user['id'].'" class="html-tooltip"><a href="/user?&id='.$user["id"].'">'.$user["jmeno"].'</a>
+                                    foreach ($vysledky as $user) {
+                                        print '
+                                            <div data-tooltip-id="' . $user['id'] . '" class="html-tooltip"><a href="/user?&id=' . $user["id"] . '">' . $user["jmeno"] . '</a>
                                                 <span class="tooltiptext">
                                                 </span>
                                             </div>
                                             <br>
                                         ';
-                                }
-                            ?>
-                            <br><p>Šéfredaktoři:</p>
-                            <?php
-                            $dotaz = $pdo->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
-                            $vysledky = $dotaz->execute([4]);
-                            $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
+                                    }
+                                    ?>
+                                    <br>
+                                    <hr class="my-4">
+                                    <h5>Šéfredaktoři:</h5>
+                                    <?php
+                                    $dotaz = $pdo->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
+                                    $vysledky = $dotaz->execute([4]);
+                                    $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
 
-                            foreach($vysledky as $user) {
-                                print '
-                                            <div data-tooltip-id="'.$user['id'].'" class="html-tooltip"><a href="/user?&id='.$user["id"].'">'.$user["jmeno"].'</a>
+                                    foreach ($vysledky as $user) {
+                                        print '
+                                            <div data-tooltip-id="' . $user['id'] . '" class="html-tooltip"><a href="/user?&id=' . $user["id"] . '">' . $user["jmeno"] . '</a>
                                                 <span class="tooltiptext">
                                                 </span>
                                             </div>
                                             <br>
                                         ';
-                            }
-                            ?>
-
+                                    }
+                                    ?>
+                            </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6">
                             <h5>Poslední aktivita</h5>
                             <table class="table table-striped">
                                 <?php

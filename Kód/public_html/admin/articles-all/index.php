@@ -1,47 +1,47 @@
 <?php
-    include "../head.php";
+include "../head.php";
 ?>
-    <div class="container admin">
-        <div class="row row-eq-height">
-            <div class="col-lg-3">
-                <?php include "../menu.php"; ?>
-            </div>
-            <div class="col-lg-9">
-                <div class="col-content">
-                    <div class="d-flex justify-content-between align-items-baseline py-0">
-                        <h4 class="my-0">Příspěvky</h4>
-                    </div>
-                    <?php //Vypsání datatables
-                    ini_set('display_errors', 1);
-                    ini_set('display_startup_errors', 1);
-                    error_reporting(E_ALL);
+<div class="container-fluid admin">
+    <div class="row">
+        <div class="col-lg-2">
+            <?php include "../menu.php"; ?>
+        </div>
+        <div class="col-lg-10">
+            <div class="col-content">
+                <div class="d-flex justify-content-between align-items-baseline py-0">
+                    <h4 class="my-0">Příspěvky</h4>
+                </div>
+                <?php //Vypsání datatables
+                ini_set('display_errors', 1);
+                ini_set('display_startup_errors', 1);
+                error_reporting(E_ALL);
 
-                    define('SQL_HOST', 'sql4.webzdarma.cz');
-                    define('SQL_DBNAME', 'gekwzcz3751');
-                    define('SQL_USERNAME', 'gekwzcz3751');
-                    define('SQL_PASSWORD', '&976l3lW9b^12.8J)ykv');
+                define('SQL_HOST', 'sql4.webzdarma.cz');
+                define('SQL_DBNAME', 'gekwzcz3751');
+                define('SQL_USERNAME', 'gekwzcz3751');
+                define('SQL_PASSWORD', '&976l3lW9b^12.8J)ykv');
 
-                    $dsn = 'mysql:dbname=' . SQL_DBNAME . ';host=' . SQL_HOST . '';
-                    $user = SQL_USERNAME;
-                    $password = SQL_PASSWORD;
+                $dsn = 'mysql:dbname=' . SQL_DBNAME . ';host=' . SQL_HOST . '';
+                $user = SQL_USERNAME;
+                $password = SQL_PASSWORD;
 
-                    try {
-                        $pdo = new PDO($dsn, $user, $password);
-                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    } catch (PDOException $e) {
-                        die('Připojení k databázi selhalo: ' . $e->getMessage());
-                    }
-                    ?>
-                    <div class="overflow-auto">
-                        <table id="main_table" class="table table-striped table-bordered overflow-auto">
-                            <thead>
+                try {
+                    $pdo = new PDO($dsn, $user, $password);
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                } catch (PDOException $e) {
+                    die('Připojení k databázi selhalo: ' . $e->getMessage());
+                }
+                ?>
+                <div class="overflow-auto">
+                    <table id="main_table" class="table table-striped table-bordered overflow-auto">
+                        <thead>
                             <th>Název článku</th>
                             <th>Autor</th>
                             <th>Datum vydání</th>
                             <th>Odkaz ke stažení</th>
                             <th>Recenzent</th>
-                            </thead>
-                            <tbody>
+                        </thead>
+                        <tbody>
                             <?php
                             //SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id
                             $dotaz = "SELECT Users.id AS userid, Users.jmeno, Clanky.id, Clanky.nazev, Clanky.datum_vydani, vybrany_r FROM Clanky INNER JOIN Users on Clanky.autor = Users.id WHERE Clanky.stav = 0";
@@ -50,15 +50,15 @@
                             $result = $vysledek->fetchAll(\PDO::FETCH_ASSOC);
                             $pocet = $vysledek->rowCount();
                             for ($i = 0; $i < $pocet; $i++) {
-                                ?>
+                            ?>
                                 <tr>
                                     <td>
-                                        <?=$result[$i]["nazev"]?>
+                                        <?= $result[$i]["nazev"] ?>
                                     </td>
                                     <td>
                                         <?php
                                         print '
-                                            <div data-tooltip-id="'.$result[$i]["userid"].'" data-tooltip-name="'.$result[$i]["jmeno"].'" class="html-tooltip"><a href="/user?&id='.$result[$i]["userid"].'">'.$result[$i]["jmeno"].'</a>
+                                            <div data-tooltip-id="' . $result[$i]["userid"] . '" data-tooltip-name="' . $result[$i]["jmeno"] . '" class="html-tooltip"><a href="/user?&id=' . $result[$i]["userid"] . '">' . $result[$i]["jmeno"] . '</a>
                                                 <span class="tooltiptext">
                                                     <p>
                                                         <b>jmeno_uzivatele</b>
@@ -71,10 +71,10 @@
                                         ?>
                                     </td>
                                     <td>
-                                        <?=$result[$i]["datum_vydani"]?>
+                                        <?= $result[$i]["datum_vydani"] ?>
                                     </td>
                                     <td>
-                                        <a href="/upload/<?=$result[$i]["id"]?>.pdf" download="Clanek.pdf">Stáhnout</a>
+                                        <a href="/upload/<?= $result[$i]["id"] ?>.pdf" download="Clanek.pdf">Stáhnout</a>
                                     </td>
                                     <td>
                                         <?php
@@ -89,15 +89,14 @@
                                         $r_result = $stmt->get_result();
 
                                         echo '<form action="recenzent_change.php" method="post" class="auto-submit">';
-                                        echo "<input type='hidden' name='clanek_id' value='".$result[$i]['id']."'>";
+                                        echo "<input type='hidden' name='clanek_id' value='" . $result[$i]['id'] . "'>";
                                         echo '<select class="form-control" name="recenzent_id">';
                                         echo '<option value="0">Nevybrán</option>';
                                         while ($row = $r_result->fetch_assoc()) {
-                                            if($result[$i]['vybrany_r'] == $row['id']) {
-                                                echo '<option selected value="'.$row['id'].'">'.$row['jmeno'].'</option>';
-                                            }
-                                            else {
-                                                echo '<option value="'.$row['id'].'">'.$row['jmeno'].'</option>';
+                                            if ($result[$i]['vybrany_r'] == $row['id']) {
+                                                echo '<option selected value="' . $row['id'] . '">' . $row['jmeno'] . '</option>';
+                                            } else {
+                                                echo '<option value="' . $row['id'] . '">' . $row['jmeno'] . '</option>';
                                             }
                                         }
                                         echo '</select>';
@@ -108,17 +107,17 @@
                                         ?>
                                     </td>
                                 </tr>
-                                <?php
+                            <?php
                             }
                             $pdo = null;
                             ?>
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <?php
 include "../foot.php";
 ?>
