@@ -15,6 +15,15 @@ window.addEventListener("load", function() {
             $(el).submit();
         });
     });
+    document.getElementById("viewpass").addEventListener("click", function() {
+        let password_textbox = this.parentElement.querySelector("#password");
+        if(this.checked) {
+            password_textbox.setAttribute("type", "text");
+        }
+        else {
+            password_textbox.setAttribute("type", "password");
+        }
+    });
     attachTooltips();
 });
 
@@ -65,13 +74,15 @@ function attachTooltips() {
             let user_id = el.getAttribute("data-tooltip-id");
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
-                var resp = this.responseText;
-                resp = resp.substring(resp.indexOf("<p>"));
-                el.querySelector(".tooltiptext").innerHTML = resp;
-                //odstraní probliknutí, ale to ještě pak časem doladím
-                setTimeout(function() {
-                    el.querySelector(".tooltiptext").style.display = "block";
-                }, 50);
+                if (this.readyState == 4 && this.status == 200) {
+                    var resp = this.responseText;
+                    resp = resp.substring(resp.indexOf("<p>"));
+                    el.querySelector(".tooltiptext").innerHTML = resp;
+                    //odstraní probliknutí, ale to ještě pak časem doladím
+                    setTimeout(function() {
+                        el.querySelector(".tooltiptext").style.display = "block";
+                    }, 50);
+                }
 
             };
             xhttp.open("POST", "//gek.wz.cz/classes/TooltipContent.php", true);
@@ -79,4 +90,35 @@ function attachTooltips() {
             xhttp.send("user_id=" + user_id);
         });
     });
+}
+
+function showEditDialog(user_id) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var resp = this.responseText;
+            resp = resp.substring(resp.indexOf("{"));
+            var obj = JSON.parse(resp);
+            console.log(obj);
+            var dialog = document.querySelector("#editUser");
+            dialog.querySelector("#jmeno").value = obj.jmeno;
+            dialog.querySelector("#email").value = obj.email;
+            dialog.querySelector("input[name=id]").value = user_id;
+            dialog.querySelectorAll("#opravneni option").forEach(function(option) {
+                if(option.getAttribute("value") == obj.opravneni) {
+                    option.setAttribute("selected", "selected");
+                }
+                else {
+                    if(option.hasAttribute("selected")) {
+                        option.removeAttribute("selected");
+                    }
+                }
+            });
+            $('#editUser').modal('show');
+        }
+
+    };
+    xhttp.open("POST", "//gek.wz.cz/admin/users/getUserData.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("userid=" + user_id);
 }

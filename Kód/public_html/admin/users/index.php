@@ -59,8 +59,8 @@ include "../head.php";
                             print $result[$i]["email"];
                             echo '</td>';
                             echo '<td>';
-                            //if($result[$i]["id"] != $_SESSION['user']->getId()) echo '<div class="dropdown"><button class="btn btn-link btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Akce</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Změnit údaje</a><a class="dropdown-item text-danger" data-account-id="'.$result[$i]["id"].'" data-account-name="'.$result[$i]["jmeno"].'" onclick="deleteAccount(event)" href="#">Smazat</a></div></div>';
-                            if($result[$i]["id"] != $_SESSION['user']->getId()) echo '<div class="dropdown"><button class="btn btn-link btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Akce</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item text-danger" data-account-id="'.$result[$i]["id"].'" data-account-name="'.$result[$i]["jmeno"].'" onclick="deleteAccount(event)" href="#">Smazat</a></div></div>';
+                            if($result[$i]["id"] != $_SESSION['user']->getId()) echo '<div class="dropdown"><button class="btn btn-link btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Akce</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a data-account-id="'.$result[$i]["id"].'" class="dropdown-item" href="#" onclick="showEditDialog(this.getAttribute(\'data-account-id\'));">Změnit údaje</a><a class="dropdown-item text-danger" data-account-id="'.$result[$i]["id"].'" data-account-name="'.$result[$i]["jmeno"].'" onclick="deleteAccount(event)" href="#">Smazat</a></div></div>';
+                            //if($result[$i]["id"] != $_SESSION['user']->getId()) echo '<div class="dropdown"><button class="btn btn-link btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Akce</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item text-danger" data-account-id="'.$result[$i]["id"].'" data-account-name="'.$result[$i]["jmeno"].'" onclick="deleteAccount(event)" href="#">Smazat</a></div></div>';
                             echo '</td>';
                             echo '</tr>';
                         }
@@ -90,6 +90,54 @@ include "../head.php";
                     </form>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Ne</button>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="editUser" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form action="updateUser.php" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editUser">Správa uživatele</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <input type="hidden" name="id" value="">
+                        <div class="form-group">
+                            <label for="jmeno">Jméno</label>
+                            <input id="jmeno" name="jmeno" class="form-control" type="text">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input id="email" name="email" class="form-control" type="email">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Heslo</label>
+                            <input id="password" name="heslo" class="form-control" type="password">
+                            <input id="viewpass" type="checkbox">
+                            <label for="viewpass">Zobrazit heslo</label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="opravneni">Oprávnění</label>
+                            <select id="opravneni" name="opravneni" class="form-control">
+                                <?php
+                                foreach (User::getPoleOpravneni() as $index => $opravneni) {
+                                    echo '<option value="'.$index.'">'.$opravneni['name'].'</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Zrušit</button>
+                        <button type="submit" class="btn btn-primary">Uložit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
