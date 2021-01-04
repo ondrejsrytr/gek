@@ -11,8 +11,4 @@ $vysledek->execute(array($_POST["articleId"],$_SESSION["user"]->getId(), $_POST[
 
 ActivityLog::Log('Ohodnocen článek '.$_POST['articleId']);
 
-
-
-echo ("jsem tu, nespadlo to. ");
-echo($stav);
-echo(" jo?");
+header("Location: index.php");
