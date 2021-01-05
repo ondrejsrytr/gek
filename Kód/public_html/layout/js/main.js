@@ -15,15 +15,21 @@ window.addEventListener("load", function() {
             $(el).submit();
         });
     });
-    document.getElementById("viewpass").addEventListener("click", function() {
-        let password_textbox = this.parentElement.querySelector("#password");
-        if(this.checked) {
-            password_textbox.setAttribute("type", "text");
-        }
-        else {
-            password_textbox.setAttribute("type", "password");
-        }
-    });
+    if(document.querySelectorAll("#viewpass").length > 0) {
+        document.querySelector("#viewpass").addEventListener("click", function() {
+            let password_textbox = this.parentElement.querySelector("#password");
+            if(this.checked) {
+                password_textbox.setAttribute("type", "text");
+            }
+            else {
+                password_textbox.setAttribute("type", "password");
+            }
+        });
+    }
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
     attachTooltips();
 });
 
@@ -78,10 +84,7 @@ function attachTooltips() {
                     var resp = this.responseText;
                     resp = resp.substring(resp.indexOf("<p>"));
                     el.querySelector(".tooltiptext").innerHTML = resp;
-                    //odstraní probliknutí, ale to ještě pak časem doladím
-                    setTimeout(function() {
-                        el.querySelector(".tooltiptext").style.display = "block";
-                    }, 50);
+                    el.querySelector(".tooltiptext").style.display = "block";
                 }
 
             };

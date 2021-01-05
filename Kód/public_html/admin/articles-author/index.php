@@ -73,7 +73,7 @@ include "../head.php";
                                         ';
                                 echo '</td>';
                                 echo '<td>';
-                                print $result[$i]["datum_ohodnoceni"];
+                                print Functions::DateToHtml($result[$i]["datum_ohodnoceni"]);
                                 echo '</td>';
                                 echo '<td>';
                                 echo $result[$i]["aktualnost"];

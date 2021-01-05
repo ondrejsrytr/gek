@@ -2,6 +2,7 @@
 define('ROOT', "/3w/users/g/gek.wz.cz/web/");
 include_once ROOT . "classes/User.php";
 include ROOT . "session.php";
+include_once ROOT . "classes/Functions.php";
 ?>
 <!doctype html>
 <html lang="cs">
@@ -86,7 +87,7 @@ include ROOT . "session.php";
                     ';
                 echo '</td>';
                 echo '<td>';
-                print $result[$i]["datum_vydani"];
+                echo Functions::DateToHtml($result[$i]["datum_vydani"]);
                 echo '</td>';
                 echo '<td>';
                 echo '<a href="/upload/'.$result[$i]["id"].'.pdf" download="Clanek.pdf">Stáhnout</a>';
@@ -156,7 +157,7 @@ include ROOT . "session.php";
 
                 }
             }
-
+            $pdo = null;
             echo '
                 <div class="toast" data-autohide="false">
                     <div class="toast-header">

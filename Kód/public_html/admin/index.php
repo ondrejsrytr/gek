@@ -16,13 +16,13 @@ include "head.php";
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="jumbotron bg-white py-0">
+                            <div class="jumbotron bg-white py-0 px-0">
                                 <h1 class="display-4">Projekt GEK – časopisy a články</h1>
                                 <p>Tento projekt byl vytvořen studenty Lukáš Smaženka, Ondřej Šrytr, František Bartuněk, Milan Zatloukal, Dmytro Radchuk v rámci předmětu ŘSP – Řízení softwarových projektů</p>
                                 <hr class="my-4">
                                 <h3>Instrukce pro autory:</h3>
                                 <p>Autoří zasílají své příspěvky do redakce časopisu pomocí formuláře v levém menu. Ty musí být ve shodě s Pokyny pro autory:</p>
-                                <a href=“http://www.vspj.cz/soubory/download/id/7344“>Stáhnout pokyny</a> a ve formátu, požadovaném šablonou <a href=“https://www.vspj.cz/soubory/download/id/4186“>Stáhnout šablonu</a> <br><br>
+                                <a href="//www.vspj.cz/soubory/download/id/7344">Stáhnout pokyny</a> a ve formátu, požadovaném šablonou <a href="//www.vspj.cz/soubory/download/id/4186L">Stáhnout šablonu</a> <br><br>
                                     <hr class="my-4">
                                     <h3>Redakční rada</h3>
                                     <p>Recenzenti:</p>
@@ -100,7 +100,7 @@ include "head.php";
                                 </tr></thead>';
                                     foreach ($vysledky as $aktivita) {
                                         echo '<tr>
-                                    <td>' . $aktivita['datum'] . '</td>
+                                    <td>' . Functions::DateToHtml($aktivita['datum']) . '</td>
                                     <td>' . $aktivita['co'] . '</td>
                                 </tr>';
                                     }

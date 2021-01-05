@@ -15,4 +15,14 @@
             }
             return $mysqldate;
         }
+
+        public static function DateToHtml($sqldate) {
+            $phpdate = strtotime($sqldate);
+            $html = '<span class="date">';
+            $html .= '<span class="text" data-bs-toggle="tooltip" data-bs-placement="top" title="'.date( 'H:i', $phpdate ).'">';
+            $html .= date( 'd. m. Y', $phpdate );
+            $html .= '</span>';
+            $html .= '</span>';
+            return $html;
+        }
     }

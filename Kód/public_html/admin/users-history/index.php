@@ -56,7 +56,7 @@
                                         <?=$result[$i]["co"]?>
                                     </td>
                                     <td>
-                                        <?=$result[$i]["datum"]?>
+                                        <?=Functions::DateToHtml($result[$i]["datum"])?>
                                     </td>
                                 </tr>
                                 <?php
