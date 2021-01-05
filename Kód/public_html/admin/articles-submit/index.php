@@ -78,7 +78,7 @@ include "../head.php";
                                         ?>
                                     </td>
                                     <td>
-                                        <?= $result[$i]["datum_vydani"] ?>
+                                        <?= Functions::DateToHtml($result[$i]["datum_vydani"]) ?>
                                     </td>
                                     <td>
                                         <a href="/upload/<?= $result[$i]["id"] ?>.pdf" download="Clanek.pdf">Stáhnout</a>
