@@ -16,12 +16,12 @@ include "../head.php";
             }
         }
     </script>
-    <div class="container admin">
+    <div class="container-fluid admin">
         <div class="row row-eq-height">
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <?php include "../menu.php"; ?>
             </div>
-            <div class="col-lg-9">
+            <div class="col-lg-10">
                 <div class="col-content">
                     <!-- OBSAH STRÁNKY -->
                     <h4>Uživatelé</h4>

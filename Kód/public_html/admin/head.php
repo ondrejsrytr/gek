@@ -39,7 +39,7 @@ $_SERVER['menu'] = [
         "nazev" => "Příspěvky od autorů",
         "url" => "/admin/articles-all",
         "opravneni" => array(3,4,5),
-        "dotaz" => "SELECT 1 FROM Clanky INNER JOIN Users on Clanky.autor = Users.id WHERE Clanky.stav = 0",
+        "dotaz" => "SELECT 1 FROM Clanky INNER JOIN Users on Clanky.autor = Users.id WHERE Clanky.stav = 0 AND Clanky.vybrany_r is null",
         "dotaz_execute_array" => null
     ],
     [ //redaktor, šéfredaktor, admin // Toto přidá novou položku na které pracuju, na github se to pak bude dávat lépe - Smáža

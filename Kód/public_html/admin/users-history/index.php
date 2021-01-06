@@ -1,12 +1,12 @@
 <?php
     include "../head.php";
 ?>
-    <div class="container admin">
+    <div class="container-fluid admin">
         <div class="row row-eq-height">
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <?php include "../menu.php"; ?>
             </div>
-            <div class="col-lg-9">
+            <div class="col-lg-10">
                 <div class="col-content">
                     <div class="d-flex justify-content-between align-items-baseline py-0">
                         <h4 class="my-0">Historie uživatelských akcí</h4>

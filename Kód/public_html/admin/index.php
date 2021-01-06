@@ -1,10 +1,6 @@
 <?php
 include "head.php";
 ?>
-<?php
-//UPOZORNĚNÍ PRO FRONTENĎÁKY!!!
-//Není již nutné používat třídy podobné jako my-2, upravil jsem CSS tak, aby všechny třídy začínající na 'col' ve třídě 'admin' měly horní margin
-?>
 <div class="container-fluid admin">
     <div class="row">
         <div class="col-lg-2">
@@ -15,7 +11,7 @@ include "head.php";
                 <!-- OBSAH STRÁNKY -->
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-lg-6">
                             <div class="jumbotron bg-white py-0 px-0">
                                 <h1 class="display-4">Projekt GEK – časopisy a články</h1>
                                 <p>Tento projekt byl vytvořen studenty Lukáš Smaženka, Ondřej Šrytr, František Bartuněk, Milan Zatloukal, Dmytro Radchuk v rámci předmětu ŘSP – Řízení softwarových projektů</p>
@@ -25,15 +21,18 @@ include "head.php";
                                 <a href="//www.vspj.cz/soubory/download/id/7344">Stáhnout pokyny</a> a ve formátu, požadovaném šablonou <a href="//www.vspj.cz/soubory/download/id/4186L">Stáhnout šablonu</a> <br><br>
                                     <hr class="my-4">
                                     <h3>Redakční rada</h3>
-                                    <p>Recenzenti:</p>
-                                    <?php
-                                    include ROOT . "classes/db.php";
-                                    $dotaz = $pdo->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
-                                    $vysledky = $dotaz->execute([2]);
-                                    $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h5>Recenzenti:</h5>
+                                            <?php
+                                            include ROOT . "classes/db.php";
+                                            $dotaz = $pdo->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
+                                            $vysledky = $dotaz->execute([2]);
+                                            $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
 
-                                    foreach ($vysledky as $user) {
-                                        print '
+                                            foreach ($vysledky as $user) {
+                                                print '
                                         <div data-tooltip-id="' . $user['id'] . '" class="html-tooltip"><a href="/user?&id=' . $user["id"] . '">' . $user["jmeno"] . '</a>
                                             <span class="tooltiptext">
                                                 <p>
@@ -45,48 +44,54 @@ include "head.php";
                                         </div>
                                         <br>
                                     ';
-                                    }
-                                    ?>
-                                    <br>
-                                    <hr class="my-4">
-                                    <h5>Redaktoři:</h5>
-                                    <?php
-                                    $dotaz = $pdo->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
-                                    $vysledky = $dotaz->execute([3]);
-                                    $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
+                                            }
+                                            ?>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h5>Redaktoři:</h5>
+                                            <?php
+                                            $dotaz = $pdo->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
+                                            $vysledky = $dotaz->execute([3]);
+                                            $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
 
-                                    foreach ($vysledky as $user) {
-                                        print '
+                                            foreach ($vysledky as $user) {
+                                                print '
                                             <div data-tooltip-id="' . $user['id'] . '" class="html-tooltip"><a href="/user?&id=' . $user["id"] . '">' . $user["jmeno"] . '</a>
                                                 <span class="tooltiptext">
                                                 </span>
                                             </div>
                                             <br>
                                         ';
-                                    }
-                                    ?>
-                                    <br>
-                                    <hr class="my-4">
-                                    <h5>Šéfredaktoři:</h5>
-                                    <?php
-                                    $dotaz = $pdo->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
-                                    $vysledky = $dotaz->execute([4]);
-                                    $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
+                                            }
+                                            ?>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h5>Šéfredaktoři:</h5>
+                                            <?php
+                                            $dotaz = $pdo->prepare("SELECT id, jmeno FROM Users WHERE opravneni = ?");
+                                            $vysledky = $dotaz->execute([4]);
+                                            $vysledky = $dotaz->fetchAll(PDO::FETCH_ASSOC);
 
-                                    foreach ($vysledky as $user) {
-                                        print '
+                                            foreach ($vysledky as $user) {
+                                                print '
                                             <div data-tooltip-id="' . $user['id'] . '" class="html-tooltip"><a href="/user?&id=' . $user["id"] . '">' . $user["jmeno"] . '</a>
                                                 <span class="tooltiptext">
                                                 </span>
                                             </div>
                                             <br>
                                         ';
-                                    }
-                                    ?>
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+
+
+
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <h5>Poslední aktivita</h5>
+                        <div class="col-lg-6">
+                            <h3>Vaše poslední aktivita</h3>
+                            <br>
                             <table class="table table-striped">
                                 <?php
                                 include ROOT . "classes/db.php";
