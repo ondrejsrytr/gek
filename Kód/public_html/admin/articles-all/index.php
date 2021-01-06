@@ -74,7 +74,10 @@ include "../head.php";
                                         <?= Functions::DateToHtml($result[$i]["datum_vydani"]) ?>
                                     </td>
                                     <td>
-                                        <a href="/upload/<?= $result[$i]["id"] ?>.pdf" download="Clanek.pdf">Stáhnout</a>
+                                        <?php
+                                            $ex = Functions::FindExtensionOfUpload($result[$i]["id"]);
+                                        ?>
+                                        <a href="/upload/<?= $result[$i]["id"] ?>.<?= $ex ?>" download="Clanek.<?= $ex ?>">Stáhnout</a>
                                     </td>
                                     <td>
                                         <?php

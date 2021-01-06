@@ -1,4 +1,5 @@
 <?php
+    define('ROOT', "/3w/users/g/gek.wz.cz/web/");
     class Functions {
         /**
          * Převod SQL data na český formát
@@ -18,11 +19,23 @@
 
         public static function DateToHtml($sqldate) {
             $phpdate = strtotime($sqldate);
-            $html = '<span class="date">';
-            $html .= '<span class="text" data-bs-toggle="tooltip" data-bs-placement="top" title="'.date( 'H:i', $phpdate ).'">';
+            $html = '<span class="date" data-html="true" data-bs-toggle="tooltip" data-bs-placement="top" title="'.date( 'H:i', $phpdate ).'">';
+            $html .= '<span class="text">';
             $html .= date( 'd. m. Y', $phpdate );
             $html .= '</span>';
             $html .= '</span>';
             return $html;
+        }
+
+        public static function FindExtensionOfUpload($filename) {
+            if(file_exists(ROOT."upload/".$filename.".pdf")) {
+                return "pdf";
+            }
+            else if(file_exists(ROOT."upload/".$filename.".doc")) {
+                return "doc";
+            }
+            else if(file_exists(ROOT."upload/".$filename.".docx")) {
+                return "docx";
+            }
         }
     }

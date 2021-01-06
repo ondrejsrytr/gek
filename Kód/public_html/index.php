@@ -90,7 +90,8 @@ include_once ROOT . "classes/Functions.php";
                 echo Functions::DateToHtml($result[$i]["datum_vydani"]);
                 echo '</td>';
                 echo '<td>';
-                echo '<a href="/upload/'.$result[$i]["id"].'.pdf" download="Clanek.pdf">Stáhnout</a>';
+                $ex = Functions::FindExtensionOfUpload($result[$i]["id"]);
+                echo '<a href="/upload/'.$result[$i]["id"].'.'.$ex.'" download="Clanek.'.$ex.'">Stáhnout</a>';
                 echo '</td>';
                 echo '</tr>';
             }

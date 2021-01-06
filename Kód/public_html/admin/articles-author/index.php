@@ -112,7 +112,7 @@ include "../head.php";
                                 <div class="form-group">
                                     <label for="articleFile">Článek ve formátu PDF nebo DOC(X)</label>
                                     <br />
-                                    <input type="file" class="" name="articleFile">
+                                    <input type="file" class="" accept=".doc,.docx,.pdf" name="articleFile">
                                 </div>
                                 <div class="form-group">
                                     <label for="articleName">Tématické číslo časopisu</label>

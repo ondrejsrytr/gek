@@ -81,7 +81,10 @@ include "../head.php";
                                         <?= Functions::DateToHtml($result[$i]["datum_vydani"]) ?>
                                     </td>
                                     <td>
-                                        <a href="/upload/<?= $result[$i]["id"] ?>.pdf" download="Clanek.pdf">Stáhnout</a>
+                                        <?php
+                                        $ex = Functions::FindExtensionOfUpload($result[$i]["id"]);
+                                        ?>
+                                        <a href="/upload/<?= $result[$i]["id"] ?>.<?= $ex ?>" download="Clanek.<?= $ex ?>">Stáhnout</a>
                                     </td>
                                     <td>
                                         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#hodnotitForm" onclick="hodTamTenText('<?= $result[$i]["nazev"] ?>', '<?= $result[$i]["id"] ?>')">Hodnotit</a>
