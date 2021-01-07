@@ -38,4 +38,19 @@
                 return "docx";
             }
         }
+
+        public static function FindExtensionOfUploadMag($filename) {
+            if(file_exists(ROOT."upload2/".$filename.".pdf")) {
+                return "pdf";
+            }
+            else if(file_exists(ROOT."upload2/".$filename.".doc")) {
+                return "doc";
+            }
+            else if(file_exists(ROOT."upload2/".$filename.".docx")) {
+                return "docx";
+            }
+            else if(file_exists(ROOT."upload2/".$filename.".zip")) {
+                return "zip";
+            }
+        }
     }

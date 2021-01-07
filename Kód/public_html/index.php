@@ -111,8 +111,8 @@ include ROOT . "layout/navbar.php";
                     print $result[$i]["cislo_vydani"];
                     echo '</td>';
                     echo '<td>';
-                    $ex = Functions::FindExtensionOfUpload($result[$i]["id"]);
-                    echo '<a href="/upload/'.$result[$i]["id"].'.'.$ex.'" download="Clanek.'.$ex.'">Stáhnout</a>';
+                    $ex = Functions::FindExtensionOfUploadMag($result[$i]["cislo_vydani"]);
+                    echo '<a href="/upload2/'.$result[$i]["cislo_vydani"].'.'.$ex.'" download="Casopis.'.$ex.'">Stáhnout</a>';
                     echo '</td>';
                     echo '</tr>';
                 }

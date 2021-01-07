@@ -39,12 +39,13 @@ include "../head.php";
                             <th>Autor</th>
                             <th>Datum vydání</th>
                             <th>Odkaz ke stažení</th>
+                            <th>Tématické číslo časopisu</th>
                             <th>Recenzent</th>
                         </thead>
                         <tbody>
                             <?php
                             //SELECT Users.jmeno, Clanky.nazev, Clanky.datum_vydani FROM Clanky INNER JOIN Users on Clanky.autor = Users.id
-                            $dotaz = "SELECT Users.id AS userid, Users.jmeno, Clanky.id, Clanky.nazev, Clanky.datum_vydani, vybrany_r FROM Clanky INNER JOIN Users on Clanky.autor = Users.id WHERE Clanky.stav = 0";
+                            $dotaz = "SELECT Users.id AS userid, Users.jmeno, Clanky.id, Clanky.nazev, Clanky.datum_vydani, Clanky.tematicky_casopis, vybrany_r FROM Clanky INNER JOIN Users on Clanky.autor = Users.id WHERE Clanky.stav = 0";
                             $vysledek = $pdo->prepare($dotaz);
                             $vysledek->execute();
                             $result = $vysledek->fetchAll(\PDO::FETCH_ASSOC);
@@ -78,6 +79,16 @@ include "../head.php";
                                             $ex = Functions::FindExtensionOfUpload($result[$i]["id"]);
                                         ?>
                                         <a href="/upload/<?= $result[$i]["id"] ?>.<?= $ex ?>" download="Clanek.<?= $ex ?>">Stáhnout</a>
+                                    </td>
+                                    <td>
+                                        <?php
+                                            if($result[$i]["tematicky_casopis"] != null) {
+                                                echo $result[$i]["tematicky_casopis"];
+                                            }
+                                            else {
+                                                echo "Nevybráno";
+                                            }
+                                        ?>
                                     </td>
                                     <td>
                                         <?php

@@ -52,7 +52,7 @@ if(isset($_SESSION['user'])) {
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                                 </div>
-                                <input name="password" class="form-control" placeholder="Heslo" type="password" required>
+                                <input name="password" minlength="6" class="form-control" placeholder="Heslo" type="password" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -60,7 +60,7 @@ if(isset($_SESSION['user'])) {
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                                 </div>
-                                <input name="password2" class="form-control" placeholder="Heslo pro ověření" type="password" required>
+                                <input name="password2" minlength="6" class="form-control" placeholder="Heslo pro ověření" type="password" required>
                             </div>
                         </div>
                         <div class="form-group">

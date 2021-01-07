@@ -7,18 +7,16 @@ include_once ROOT."classes/User.php";
 include_once ROOT."classes/ActivityLog.php";
 include ROOT."session.php";
 
-if($_POST["tematicky_casopis"] == 0) $_POST["tematicky_casopis"] = null;
-
-$dotaz = "INSERT INTO Clanky (nazev, autor, tematicky_casopis) VALUES(?,?,?)";
+$dotaz = "INSERT INTO Casopisy (nazev, vydavatel) VALUES(?,?)";
 $vysledek = $pdo->prepare($dotaz);
-$vysledek->execute(array($_POST["articleName"],$_SESSION["user"]->getId(), $_POST["tematicky_casopis"]));
+$vysledek->execute(array($_POST["magName"], $_SESSION["user"]->getId()));
 
 $last_id = $pdo->lastInsertId();
-$uploaddir = ROOT."upload/";
+$uploaddir = ROOT."upload2/";
 $extension = "";
 
 
-switch($_FILES['articleFile']['type']) {
+switch($_FILES['magFile']['type']) {
     case "application/pdf":
         $extension = ".pdf";
         break;
@@ -26,14 +24,20 @@ switch($_FILES['articleFile']['type']) {
     case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
         $extension = ".docx";
         break;
+    case "application/zip":
+    case "application/octet-stream":
+    case "application/x-zip-compressed":
+    case "multipart/x-zip":
+        $extension = ".zip";
+        break;
 }
 
 $uploadfile = $uploaddir . basename($last_id. $extension);
 
 echo $last_id;
 
-if (move_uploaded_file($_FILES['articleFile']['tmp_name'], $uploadfile)) {
-    ActivityLog::Log('Nahrán článek '.$last_id);
+if (move_uploaded_file($_FILES['magFile']['tmp_name'], $uploadfile)) {
+    ActivityLog::Log('Nahrán časopis '.$last_id);
     header("Location: index.php");
 } else {
     echo "Possible file upload attack!\n";

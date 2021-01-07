@@ -48,6 +48,11 @@ $_SERVER['menu'] = [
         "opravneni" => array(3,4,5),
         "dotaz" => "SELECT 1 FROM Clanky INNER JOIN Users A ON Clanky.autor = A.id INNER JOIN Users B ON Clanky.vybrany_r = B.id INNER JOIN Clanky_hodnoceni ON Clanky.id = Clanky_hodnoceni.clanek WHERE Clanky.stav = 0 AND vybrany_r > 0 "
     ],
+    [
+        "nazev" => "Časopisy",
+        "url" => "/admin/magazines",
+        "opravneni" => array(3,4,5)
+    ],
     //administrátor
     [
         "nazev" => "Uživatelé",

@@ -116,8 +116,17 @@ include "../head.php";
                                 </div>
                                 <div class="form-group">
                                     <label for="articleName">Tématické číslo časopisu</label>
-                                    <select class="custom-select">
-                                        <option selected="selected">nevybráno</option>
+                                    <select class="custom-select" name="tematicky_casopis">
+                                        <option value="0">Nevybráno</option>
+                                        <?php
+                                            $dotaz = "SELECT cislo_vydani, nazev FROM Casopisy";
+                                            $vysledek = $pdo->prepare($dotaz);
+                                            $vysledek->execute();
+                                            $result = $vysledek->fetchAll(\PDO::FETCH_ASSOC);
+                                            foreach($result as $casopis) {
+                                                echo '<option value="'.$casopis['cislo_vydani'].'">'.$casopis['nazev'].'</option>';
+                                            }
+                                        ?>
                                     </select>
                                 </div>
                             </div>

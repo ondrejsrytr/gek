@@ -90,3 +90,8 @@ table.pure-table td, table.pure-table th {
 .date > .text {
     border-bottom: 1px dotted #777;
 }
+
+
+table.dataTable {
+    background: #ffffff;
+}
