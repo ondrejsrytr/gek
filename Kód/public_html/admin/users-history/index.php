@@ -1,6 +1,13 @@
 <?php
     include "../head.php";
 ?>
+    <script>
+        $(document).ready(function() {
+            $('#main_table_h').DataTable( {
+                "order": [[ 2, "asc" ]]
+            } );
+        } );
+    </script>
     <div class="container-fluid admin">
         <div class="row row-eq-height">
             <div class="col-lg-2">
